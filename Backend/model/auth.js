@@ -1,4 +1,4 @@
-const { pool, initialize ,sql} = require("../utils/database")
+const { pool, initialize, sql } = require("../utils/database");
 
 class User {
   constructor(name, email, password) {
@@ -9,14 +9,15 @@ class User {
 
   static async fetchAllUser() {
     await initialize();
-    const result = await pool.request().execute('USP_GET_Users');
+    const result = await pool.request().execute("USP_GET_Users");
     return result.recordset;
   }
   async save() {
     await initialize();
     let result;
     try {
-      result = await pool.request()
+      result = await pool
+        .request()
         .input("username", this.name)
         .input("pass", this.password)
         .execute("USP_Save_User");
@@ -27,20 +28,22 @@ class User {
     }
   }
 
-  static async FindUserCred(username){
+  static async FindUserCred(username) {
     await initialize();
     let result;
-    try{
-      result=await pool.request()
-        .input('username',username)
-        .output('pass',sql.NVarChar(100))
-        .execute('USP_Authenticate_USER');
-      return result.output.pass;
-    }catch(err){
-      console.log("Error while authenticating the user: ",+err);
+    try {
+      result = await pool
+        .request()
+        .input("username", username)
+        .output("pass", sql.NVarChar(100))
+        .output("uid", sql.Int)
+        .execute("USP_Authenticate_USER");
+      return { pass: result.output.pass, uid: result.output.uid };
+    } catch (err) {
+      console.log("Error while authenticating the user: ", +err);
       return null;
     }
   }
 }
 
-module.exports=User;
+module.exports = User;

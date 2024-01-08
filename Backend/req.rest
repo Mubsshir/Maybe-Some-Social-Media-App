@@ -1,0 +1,8 @@
+# POST   http://localhost:3000/login 
+# Content-Type: application/json
+
+# {"username":"khan","pass":"112233"}
+
+GET http://localhost:3000/feed
+Content-Type: application/json
+

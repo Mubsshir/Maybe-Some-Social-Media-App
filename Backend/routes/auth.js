@@ -8,6 +8,6 @@ router.get("/users",isAuth,authController.getUsers);
 router.post("/signup",authController.postSignUp)
 router.post("/login",authController.postLogin)
 router.post("/logout",isAuth,authController.postLogout)
-
+router.get('/api/isAuth',authController.getAuthStatus)
 
 module.exports=router;

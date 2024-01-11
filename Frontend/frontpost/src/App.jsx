@@ -1,10 +1,10 @@
 import "./App.css";
-import Auth from "./components/auth"
+import Landing from "./pages/Landing"
 
 function App() {
   return (
     <>
-    <Auth/>
+      <Landing />
     </>
   );
 }

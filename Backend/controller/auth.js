@@ -47,3 +47,14 @@ exports.postLogout = (req, res) => {
     }
   });
 };
+
+
+
+exports.getAuthStatus=(req,res)=>{
+  if(!req.session.isAuthenticate){
+    res.json({isAutherized:false});
+  }
+  else{
+    res.json({isAutherized:true})
+  }
+}

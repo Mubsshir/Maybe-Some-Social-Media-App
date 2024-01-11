@@ -4,7 +4,7 @@ import Input from "./ui/Input"
 
 const auth = () => {
   return (
-    <div className="w-1/2 p-5  ">
+    <div className="w-1/2 md:width: , p-5 mar ">
       <form className="w-full px-4 bg-white flex flex-col py-4 rounded-lg rounded-b-none">
         <Input input={{type:'text',name:'username' ,placeHolder:'User name'}}/>
         <Input input={{type:'password',name:'password' ,placeHolder:'Password'}}/>

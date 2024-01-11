@@ -2,6 +2,7 @@ const { response } = require("express");
 const User = require("../model/auth");
 const bcrypt = require("bcryptjs");
 
+
 exports.getUsers = async (req, res) => {
   const users = await User.fetchAllUser();
   res.json(users);
@@ -10,7 +11,7 @@ exports.getUsers = async (req, res) => {
 
 exports.postSignUp = async (req, res) => {
   const cryptPass = await bcrypt.hash(req.body.pass, 12);
-  const user = new User(req.body.username, req.body.email, cryptPass);
+  const user = new User(req.body.username,'', cryptPass);//Later I will add the provison for email 
   const result = await user.save();
   return res.json(result);
 };

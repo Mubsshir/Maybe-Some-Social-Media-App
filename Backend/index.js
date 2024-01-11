@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 app.use(authRoute);
 app.use(feedRoute);
+
 app.listen(3000, (req, res) => {
   console.log("Listening on port:3000 ............");
-
 });

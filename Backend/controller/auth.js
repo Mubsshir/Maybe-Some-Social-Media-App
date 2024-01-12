@@ -18,10 +18,12 @@ exports.postSignUp = async (req, res) => {
 
 
 exports.postLogin = async (req, res) => {
+  console.log("In Login....")
+  console.log(req.body)
   const { username, pass } = req.body;
 
   const result = await User.FindUserCred(username);
-  if (result) {
+  if (result.pass) {
     const passMatch = await bcrypt.compare(pass, result.pass);
     if (passMatch) {
       req.session.isAuthenticate = true;
@@ -52,9 +54,9 @@ exports.postLogout = (req, res) => {
 
 exports.getAuthStatus=(req,res)=>{
   if(!req.session.isAuthenticate){
-    res.json({isAutherized:false});
+    res.json({isAuthorized:false});
   }
   else{
-    res.json({isAutherized:true})
+    res.json({isAuthorized:true})
   }
 }

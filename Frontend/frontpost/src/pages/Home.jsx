@@ -1,11 +1,12 @@
-import { logout } from '../services/auth-services'
-import { AuthContext } from '../store/context'; 
-import { useRef } from 'react';
+import { AuthContext } from "../store/context";
+import { useContext } from "react";
+
+
 const Home = () => {
-  const {checkAuth}=useRef(AuthContext)
+  const { setAuth } = useContext(AuthContext)
   const logoutHandler = async () => {
-    await logout();
-    checkAuth();
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    setAuth(false);
   }
   return (
     <div className="w-svw h-svh flex  flex-col justify-center items-center  text-green-400">

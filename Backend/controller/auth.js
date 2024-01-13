@@ -1,42 +1,41 @@
-const { response } = require("express");
+const { response, json } = require("express");
 const User = require("../model/auth");
 const bcrypt = require("bcryptjs");
-
-
+const jwt = require("jsonwebtoken");
+const SECRET_KEY="KhanTopSecret"
 exports.getUsers = async (req, res) => {
   const users = await User.fetchAllUser();
   res.json(users);
 };
 
-
 exports.postSignUp = async (req, res) => {
   const cryptPass = await bcrypt.hash(req.body.pass, 12);
-  const user = new User(req.body.username,'', cryptPass);//Later I will add the provison for email 
+  const user = new User(req.body.username, "", cryptPass); //Later I will add the provison for email
   const result = await user.save();
   return res.json(result);
 };
 
-
 exports.postLogin = async (req, res) => {
-  console.log("In Login....")
-  console.log(req.body)
+  console.log("In Login....");
+  console.log(req.body);
   const { username, pass } = req.body;
 
   const result = await User.FindUserCred(username);
   if (result.pass) {
     const passMatch = await bcrypt.compare(pass, result.pass);
     if (passMatch) {
-      req.session.isAuthenticate = true;
-      req.session.userID=result.uid;
-      res.json({ message: "success" });
+      const AuthToken = jwt.sign(
+        { uid: result.uid, username: username },
+        SECRET_KEY,
+        { expiresIn: 3600 * 10 }
+      );
+      return res.json({ AuthToken });
     } else {
-      res.json({ message: "invalid username/password" });
+      return res.status(401).json({ message: "invalid username/password" });
     }
-    return;
   }
-  res.send({ message: "user not found or somthing went wrong" });
+  res.status(401).json({ message: "user not registered ,please signup" });
 };
-
 
 exports.postLogout = (req, res) => {
   req.session.destroy((err) => {
@@ -51,12 +50,13 @@ exports.postLogout = (req, res) => {
 };
 
 
-
 exports.getAuthStatus=(req,res)=>{
-  if(!req.session.isAuthenticate){
-    res.json({isAuthorized:false});
+  const ticket = req.headers['authorization'].split(' ')[1]
+  try{
+    const isValid=jwt.verify(ticket,SECRET_KEY);
+    return res.json({message:isValid})
   }
-  else{
-    res.json({isAuthorized:true})
+  catch(err){
+    return res.status(500).json({message:err})
   }
 }

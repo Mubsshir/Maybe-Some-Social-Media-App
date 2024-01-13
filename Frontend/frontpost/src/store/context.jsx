@@ -4,18 +4,20 @@ export const AuthContext = createContext();
 
 const AuthProvider = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
   const setAuth = (result) => {
     setIsAuthenticated(result);
   };
-  const checkAuth = async () => {
-    const result = await isAuthenticate();
-    setIsAuthenticated(result.isAuthorized);
+  
+  const checkAuthentication=async()=>{
+    const isAuth= await isAuthenticate();
+    setIsAuthenticated(isAuth);
   }
   useEffect(() => {
-    checkAuth();
+    checkAuthentication();
   }, [])
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setAuth,checkAuth }}>
+    <AuthContext.Provider value={{ isAuthenticated, setAuth }}>
       {props.children}
     </AuthContext.Provider>
   );

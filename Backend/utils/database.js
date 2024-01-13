@@ -1,5 +1,4 @@
 const sql = require("mssql");
-const SQLServerStore = require("connect-mssql-v2");
 
 // Configuration for the SQL Server connection
 const config = {
@@ -13,19 +12,6 @@ const config = {
   },
 };
 
-const store = new SQLServerStore(config, {
-  ttl: 1000 * 60 * 60 * 24,
-  autoRemoveInterval: 1000 * 60 * 10,
-  useUTC:false
-});
-
-store.on('connect',()=>{
-  console.log("Connected to store")
-})
-
-store.on('error',(err)=>{
-  console.log("Error while accessing store: "+err)
-})
 
 const pool = new sql.ConnectionPool(config);
 
@@ -39,4 +25,4 @@ const initialize = async () => {
   }
 };
 
-module.exports = { pool, initialize, sql, store };
+module.exports = { pool, initialize, sql };

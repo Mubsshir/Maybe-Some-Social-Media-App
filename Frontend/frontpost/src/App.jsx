@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "./store/context";
 function App() {
   const {isAuthenticated}=useContext(AuthContext)
-  console.log(isAuthenticated)
+
   if(isAuthenticated){
     return <Home/>
   }

@@ -9,10 +9,15 @@
 }
 body{
   background-color: rgba(0, 0, 0, 0.486);
-  height: 100vh;
   background-image: url('./images/LandingPage.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   background-blend-mode: darken;
+  overflow: hidden;
+  height: 100lvh;
+}
+#root{
+  height: 100%;
+  width: 100%;
 }

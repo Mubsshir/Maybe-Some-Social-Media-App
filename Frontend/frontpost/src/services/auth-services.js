@@ -1,6 +1,4 @@
-
-
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "http://192.168.29.249:3001";
 
 export const login = async (username, pass) => {
   try {
@@ -11,7 +9,8 @@ export const login = async (username, pass) => {
     });
     if (res.ok) {
       const result = await res.json();
-      document.cookie = `token=${result.AuthToken};  secure;`;
+      localStorage.removeItem('token')
+      localStorage.setItem("token", JSON.stringify(result.AuthToken));
       return true;
     }
     return false;
@@ -23,22 +22,28 @@ export const login = async (username, pass) => {
 
 export const isAuthenticate = async () => {
   try {
-    const token = document.cookie.split("=")[1];
-    const res = await fetch(`${API_BASE_URL}/api/isAuth`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-    if (!res.ok) {
-      console.log("You are not UnAuthorized");
-      return false;
+    let token = localStorage.getItem("token");
+    token=JSON.parse(token)
+    if (token) {
+      const res = await fetch(`${API_BASE_URL}/api/isAuth`, {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      let result=await res.json();
+      if (!res.ok) {
+        console.log("You are not UnAuthorized");
+        console.log(result)
+        return false;
+      }
+      return true;
     }
-    return true;
+    console.log("No token found")
+    return false;
   } catch (err) {
     console.log("Error :" + err);
     return false;
   }
 };
-

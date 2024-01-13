@@ -1,7 +1,7 @@
 {
-  "name": "khanpost",
+  "name": "khan-post",
   "version": "1.0.0",
-  "description": "mini blogging applicatin",
+  "description": "mini blogging application",
   "main": "index.js",
   "scripts": {
     "start": "nodemon start",

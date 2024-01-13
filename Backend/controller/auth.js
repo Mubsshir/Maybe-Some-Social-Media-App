@@ -2,7 +2,7 @@ const { response, json } = require("express");
 const User = require("../model/auth");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const SECRET_KEY="KhanTopSecret"
+const SECRET_KEY = "MyNameIsKhan";
 exports.getUsers = async (req, res) => {
   const users = await User.fetchAllUser();
   res.json(users);
@@ -10,7 +10,7 @@ exports.getUsers = async (req, res) => {
 
 exports.postSignUp = async (req, res) => {
   const cryptPass = await bcrypt.hash(req.body.pass, 12);
-  const user = new User(req.body.username, "", cryptPass); //Later I will add the provison for email
+  const user = new User(req.body.username, "", cryptPass); //Later I will add the provision for email
   const result = await user.save();
   return res.json(result);
 };
@@ -27,7 +27,7 @@ exports.postLogin = async (req, res) => {
       const AuthToken = jwt.sign(
         { uid: result.uid, username: username },
         SECRET_KEY,
-        { expiresIn: 3600 * 10 }
+        { expiresIn: '5min' }
       );
       return res.json({ AuthToken });
     } else {
@@ -49,14 +49,25 @@ exports.postLogout = (req, res) => {
   });
 };
 
-
-exports.getAuthStatus=(req,res)=>{
-  const ticket = req.headers['authorization'].split(' ')[1]
-  try{
-    const isValid=jwt.verify(ticket,SECRET_KEY);
-    return res.json({message:isValid})
+exports.getAuthStatus = (req, res) => {
+  console.log("Authorizing user in")
+  const device=(req.headers["user-agent"]);
+  const ticket = req.headers["authorization"].split(" ")[1];
+  if(!ticket){
+    console.log(device," is Not verified")
   }
-  catch(err){
-    return res.status(500).json({message:err})
+  try {
+    jwt.decode(ticket);
+    const deco=jwt.decode(ticket,SECRET_KEY)
+    console.log(deco.exp)
+    const isValid = jwt.verify(ticket, SECRET_KEY);
+    if (isValid) {
+      return res.status(200).json({  isValid });
+    } else {
+      
+      return res.status(401).json({ message: "You are not authorized" });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err });
   }
-}
+};

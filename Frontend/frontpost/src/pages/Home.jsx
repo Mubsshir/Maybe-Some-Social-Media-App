@@ -1,20 +1,27 @@
 import { AuthContext } from "../store/context";
 import { useContext } from "react";
-
+import Header from "../components/layout/Header";
 
 const Home = () => {
   const { setAuth } = useContext(AuthContext)
-  const logoutHandler = async () => {
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    setAuth(false);
-  }
+
   return (
-    <div className="xl:w-full font-bold  text-green-500  flex flex-col xl:items-center  justify-center h-dvh md:items-center phone:items-center">
-      <h3 className="xl:text-9xl phone:text-6xl">Welcome</h3>
-      <button onClick={logoutHandler}
-        className=" outline-none text-5xl bg-green-500 text-white px-5  py-2 flex justify-center items-center rounded-sm cursor-pointer hover:bg-black mt-5"
-      >Logout</button>
-    </div>
+    <>
+      <Header />
+      <main className="xl:w-full   bg-gray-900  text-gray-300   flex flex-row lg:h-full">
+        <section className="xl:w-1/6 ">
+            <ul className="p-0   [&>*]:px-5 [&>*]:py-2 group cursor-pointer text-lg">
+              <li className="hover:bg-green-500">My Profile</li>
+              <li className="hover:bg-green-500">Feeds</li>
+              <li className="hover:bg-green-500">My Post</li>
+              <li className="hover:bg-green-500">Dashboards</li>
+            </ul>
+        </section>
+        <section className="bg-cyan-300  w-full">
+          h
+        </section>
+      </main>
+    </>
   )
 }
 

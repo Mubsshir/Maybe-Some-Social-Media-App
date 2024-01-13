@@ -9,8 +9,8 @@ const Home = () => {
     setAuth(false);
   }
   return (
-    <div className="w-svw h-svh flex  flex-col justify-center items-center  text-green-400">
-      <h3 className="text-9xl ">Welcome</h3>
+    <div className="xl:w-full font-bold  text-green-500  flex flex-col xl:items-center  justify-center h-dvh md:items-center phone:items-center">
+      <h3 className="xl:text-9xl phone:text-6xl">Welcome</h3>
       <button onClick={logoutHandler}
         className=" outline-none text-5xl bg-green-500 text-white px-5  py-2 flex justify-center items-center rounded-sm cursor-pointer hover:bg-black mt-5"
       >Logout</button>

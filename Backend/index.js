@@ -12,6 +12,6 @@ app.use(cookieParser());
 app.use(authRoute);
 app.use(feedRoute);
 
-app.listen(3001,'0.0.0.0' , (req, res) => {
+app.listen(3001 , (req, res) => {
   console.log("Listening on port:3001 ............");
 });

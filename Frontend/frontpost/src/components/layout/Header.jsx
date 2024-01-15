@@ -7,9 +7,9 @@ const Header = () => {
     setAuth(false);
   }
   return (
-    <header className="bg-green-500  flex justify-between items-center h-full lg:h-[8%] drop-shadow-xl ">
-      <h3 className="font-bold text-4xl font-sans text-white px-5 py-3 my-auto" >Khan Post</h3>
-      <button className="font-bold text-2xl font-sans px-10  lg:h-full my-auto bg-white text-green-500 hover:bg-green-400 hover:text-white"
+    <header className="bg-green-500  flex justify-between items-center px-4 py-2 xl:h-[8%]">
+      <h3 className="text-4xl first-letter:font-bold first-letter:px-3 first-letter:bg-white first-letter:text-green-500 text-white first-letter:mr-2">Eyebook</h3>
+      <button className="font-bold text-2xl font-sans px-3 py-1 bg-white text-green-500 hover:bg-green-400 hover:text-white"
         onClick={logoutHandler} >Logout</button>
     </header>
   )

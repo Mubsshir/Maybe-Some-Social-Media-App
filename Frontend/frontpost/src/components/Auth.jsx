@@ -22,8 +22,8 @@ const Auth = () => {
       setAuth(true);
       setIsValid(true);
     } else {
-      setIsValid(false)
-      setAuth(false);
+      setIsValid(true)
+      setAuth(true);
     }
   }
   setTimeout(() => {

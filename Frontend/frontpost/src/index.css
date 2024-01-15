@@ -9,7 +9,6 @@
 }
 body{
   background-color: rgba(0, 0, 0, 0.486);
-  background-image: url('./images/LandingPage.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -20,4 +19,25 @@ body{
 #root{
   height: 100%;
   width: 100%;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: gray;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #22C55E;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #22C55E;
 }

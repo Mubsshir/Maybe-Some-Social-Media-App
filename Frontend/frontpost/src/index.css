@@ -15,6 +15,7 @@ body{
   background-blend-mode: darken;
   overflow: hidden;
   height: 100lvh;
+  user-select: none;
 }
 #root{
   height: 100%;

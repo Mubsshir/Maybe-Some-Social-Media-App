@@ -32,9 +32,6 @@ const Profile = () => {
       <input type={key=='DOB'&&'date'} name="name"  value={userData[key]} className={`bg-transparent outline-none ${isEdit ? 'text-green-500 text' : ''}`} disabled={!isEdit} />
     </div>
   ))
-  
-
-
   return (
     <main className="w-full h-full grid grid-cols-3 gap-2 bg-gradient-to-tr p-2 from-gray-700 to-black ">
       <section className="h-fit bg-gradient-to-t from-gray-800 to-black col-span-2 p-2 rounded-sm shadow-xl">

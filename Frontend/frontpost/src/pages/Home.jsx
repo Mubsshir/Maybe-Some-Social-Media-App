@@ -5,6 +5,7 @@ import Navigation from "../components/layout/Navigation";
 import Profile from "./Profile";
 import { Route, Routes } from "react-router-dom";
 
+
 const Home = () => {
   return (
     <>

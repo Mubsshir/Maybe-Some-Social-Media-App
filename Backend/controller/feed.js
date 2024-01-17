@@ -9,7 +9,7 @@ exports.getFeeds = async (req, res) => {
     }
     return res.json({ message: "No post found" });
   } catch (err) {
-    console.log("Somthing went wrong\n" + err);
+    console.log("Something went wrong\n" + err);
     res.json({ message: "Error while Fetching posts: " + err });
   }
 };

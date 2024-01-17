@@ -27,7 +27,7 @@ exports.postLogin = async (req, res) => {
       const AuthToken = jwt.sign(
         { uid: result.uid, username: username },
         SECRET_KEY,
-        { expiresIn: '5min' }
+        { expiresIn: '1hr' }
       );
       return res.json({ AuthToken });
     } else {
@@ -50,7 +50,7 @@ exports.postLogout = (req, res) => {
 };
 
 exports.getAuthStatus = (req, res) => {
-  console.log("Authorizing user in")
+  console.log("verifying token....")
   const device=(req.headers["user-agent"]);
   const ticket = req.headers["authorization"].split(" ")[1];
   if(!ticket){
@@ -62,9 +62,10 @@ exports.getAuthStatus = (req, res) => {
     console.log(deco.exp)
     const isValid = jwt.verify(ticket, SECRET_KEY);
     if (isValid) {
+      console.log("User is valid")
       return res.status(200).json({  isValid });
     } else {
-      
+      console.log("Invalid User")
       return res.status(401).json({ message: "You are not authorized" });
     }
   } catch (err) {

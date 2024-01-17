@@ -3,7 +3,14 @@ import { FaEdit, FaSave, FaLinkedin, FaInstagram, FaTwitch } from "react-icons/f
 import { GoX } from 'react-icons/go'
 const Profile = () => {
   const [isEdit, setIsEdit] = useState(false);
-
+  const userData = {
+    Name: 'Mubasshir Khan',
+    DOB: '1997-02-12',
+    Email: 'mmk@gmail.com',
+    Phone: '9898123443',
+    img: 'https://wallpapercave.com/wp/wp9180415.jpg',
+    bio: 'Lorem ipsum dolor eligendi temporibus, omnis excepturi beatae possimus? Sed, similique tenetur.'
+  }
   const onEditHandler = (e) => {
     e.preventDefault();
     if (isEdit) {
@@ -17,15 +24,23 @@ const Profile = () => {
     e.preventDefault();
     setIsEdit(false)
   }
+  const keysToRender = Object.keys(userData).filter((key) => key !== 'img' && key !== 'bio');
+
+  const info=keysToRender.map((key) => (
+    <div key={key} className="grid grid-cols-2 [&>*]:border-b [&>*]:border-gray-500 [&>*]:pb-2 [&>*]:text-lg mb-2">
+      <h6 className="">{key}</h6>
+      <input type={key=='DOB'&&'date'} name="name"  value={userData[key]} className={`bg-transparent outline-none ${isEdit ? 'text-green-500 text' : ''}`} disabled={!isEdit} />
+    </div>
+  ))
+  
+
+
   return (
     <main className="w-full h-full grid grid-cols-3 gap-2 bg-gradient-to-tr p-2 from-gray-700 to-black ">
       <section className="h-fit bg-gradient-to-t from-gray-800 to-black col-span-2 p-2 rounded-sm shadow-xl">
         <h3 className="text-green-500 text-4xl">About</h3>
         <form className=" mt-6 px-3">
-          <div className="grid grid-cols-2 [&>*]:border-b [&>*]:border-gray-500 [&>*]:pb-2 [&>*]:text-lg mb-2">
-            <h6 className="">Name</h6>
-            <input type="text" name="name" defaultValue={'Mubasshir'} className={`bg-transparent outline-none ${isEdit ? 'text-green-500 text text-lime-200' : ''}`} disabled={!isEdit} />
-          </div>
+      {info}
           <div className="flex">
             <button onClick={onEditHandler} type={isEdit ? 'submit' : 'button'} className="mt-10 flex  text-lg justify-center items-center bg-transparent hover:bg-green-500 text-green-500 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
               {isEdit ? 'Save ' : 'Edit Information'}{isEdit && <FaEdit className="ml-2" /> && <FaSave className="ml-2" />}
@@ -38,13 +53,13 @@ const Profile = () => {
       </section>
       <section className="  bg-gradient-to-t from-gray-800 to-black col-span-1 p-2 rounded-sm shadow-xl flex items-center flex-col drop-shadow-md">
         <img src="https://wallpapercave.com/wp/wp9180415.jpg" alt="Mubasshir" className="w-[150px] h-[150px] object-cover rounded-full  " />
-        <h2 className="text-xl  font-bold  mt-7">Mubasshir Khan</h2>
+        <h2 className="text-xl  font-bold  mt-7">{userData.Name}</h2>
         <h3 className="italic text-green-500 font-bold text-lg mt-3">Bio</h3>
-        <p className="text-center">Lorem ipsum dolor eligendi temporibus, omnis excepturi beatae possimus? Sed, similique tenetur.</p>
+        <p className="text-center">{userData.bio}</p>
         <div className="text-4xl  flex justify-center [&>*]:mx-3 [&>*]:cursor-pointer  mt-4 items-center w-full">
           <FaLinkedin className="hover:text-green-500" />
-          <FaInstagram className="hover:text-green-500"/> 
-          <FaTwitch className="hover:text-green-500"/>
+          <FaInstagram className="hover:text-green-500" />
+          <FaTwitch className="hover:text-green-500" />
         </div>
       </section>
     </main>

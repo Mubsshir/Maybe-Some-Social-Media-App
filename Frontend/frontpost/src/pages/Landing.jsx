@@ -1,4 +1,4 @@
-import Auth from "../components/Auth"
+import Auth from "./Auth"
 const Landing = () => {
   return (
     <div className="bg-[url('../images/LandingPage.jpg')] xl:w-full flex flex-col xl:items-end  justify-center h-dvh md:items-center phone:items-center">

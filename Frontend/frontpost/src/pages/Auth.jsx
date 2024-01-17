@@ -1,4 +1,4 @@
-import Input from "./ui/Input"
+import Input from "../components/ui/Input"
 import { login } from "../services/auth-services"
 import { useRef, useContext, useState } from "react";
 import { AuthContext } from '../store/context'
@@ -20,10 +20,9 @@ const Auth = () => {
     const isLoggedIn = await login(user, pass);
     if (isLoggedIn) {
       setAuth(true);
-      setIsValid(true);
     } else {
-      setIsValid(true)
-      setAuth(true);
+      setIsValid(false)
+      setAuth(false);
     }
   }
   setTimeout(() => {

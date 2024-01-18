@@ -1,9 +1,10 @@
+import Cookies from "js-cookie";
 import { AuthContext } from "../../store/context";
 import { useContext } from "react";
 const Header = () => {
   const { setAuth } = useContext(AuthContext)
   const logoutHandler = async () => {
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    Cookies.remove('token');
     setAuth(false);
   }
   return (

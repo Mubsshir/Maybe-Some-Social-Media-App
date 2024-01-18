@@ -5,8 +5,8 @@ import { AuthContext } from "./store/context";
 import { Route, Routes, Navigate } from "react-router-dom";
 
 function App() {
-  const { isAuthenticated } = useContext(AuthContext);
-
+  const { isAuthenticated ,user } = useContext(AuthContext);
+  console.log(user)
   return (
     <Routes>
       <Route path="/login" element={!isAuthenticated ? <Landing /> : <Navigate to="/Feeds" />} />

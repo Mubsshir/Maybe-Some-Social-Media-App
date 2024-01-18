@@ -1,11 +1,13 @@
+import Cookies from "js-cookie";
+
 const API_BASE_URL = "http://192.168.29.249:3001";
-let token = localStorage.getItem("token");
-token = JSON.parse(token);
+
+let token = Cookies.get("token");
+
 const headers = {
   authorization: `Bearer ${token}`,
   "Content-Type": "application/json",
 };
-
 export const login = async (username, pass) => {
   try {
     const res = await fetch(`${API_BASE_URL}/login`, {
@@ -15,8 +17,8 @@ export const login = async (username, pass) => {
     });
     if (res.ok) {
       const result = await res.json();
-      localStorage.removeItem("token");
-      localStorage.setItem("token", JSON.stringify(result.AuthToken));
+      Cookies.remove('token');
+      Cookies.set('token', result.AuthToken);
       return true;
     }
     return false;
@@ -31,7 +33,7 @@ export const isAuthenticate = async () => {
     if (token) {
       const res = await fetch(`${API_BASE_URL}/api/isAuth`, {
         method: "POST",
-        headers:headers
+        headers: headers,
       });
       let result = await res.json();
       if (!res.ok) {
@@ -49,20 +51,35 @@ export const isAuthenticate = async () => {
   }
 };
 
-export const getFeeds=async()=>{
-  try{
-    const res=await fetch(`${API_BASE_URL}/feeds`,{
-      method:'GET',
-      headers:headers
-    })
-    if(res.ok){
-      const data=await res.json();
+export const getFeeds = async () => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/feeds`, {
+      method: "GET",
+      headers: headers,
+    });
+    if (res.ok) {
+      const data = await res.json();
       return data;
     }
     return null;
+  } catch (err) {
+    console.log(err);
+    return null;
   }
-  catch(err){
-    console.log(err)
-    return null
+};
+
+export const getUserInfo = async () => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/profile`, {
+      method: "GET",
+      headers: headers,
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    }
+  } catch (err) {
+    console.log("Err ", err);
+    return null;
   }
-}
+};

@@ -8,7 +8,7 @@ const Article = (props) => {
     setIsLike(!isLike);
   }
   return (
-    <article className="px-5 py-3 bg-gray-800 h-fit  shadow-2xl rounded-xl hover:bg-gradient-to-tr from-gray-800 to-black">
+    <article className="h-fit px-5 py-3 bg-gray-800  shadow-2xl rounded-xl hover:bg-gradient-to-tr from-gray-800 to-black">
       <div className="border-b pb-2">
         <h3 className="font-bold text-lg">{props.name}</h3>
         <h5 className="text-sm font-thin">Posted at: {`${props.PostTime}`}</h5>

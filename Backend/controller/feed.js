@@ -24,7 +24,7 @@ exports.postFeed = async (req, res) => {
     if (result) {
       return res.status(200).json({ message: "Post saved" });
     } else {
-      return res.json({ message: "Opps somthing went wrong..." });
+      return res.json({ message: "Opps something went wrong..." });
     }
   } catch (err) {
     return res.json({ message: err });
@@ -41,7 +41,7 @@ exports.getFeed = async (req, res) => {
     }
     return res.json({ message: "No post found" });
   } catch (err) {
-    console.log("Somthing went wrong\n" + err);
+    console.log("Something went wrong\n" + err);
     res.json({ message: "Error while Fetching post: " + err });
   }
 };

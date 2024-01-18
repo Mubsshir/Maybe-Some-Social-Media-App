@@ -1,35 +1,56 @@
-import { useState } from "react"
+import { useState, useContext, useEffect } from "react"
 import { FaEdit, FaSave, FaLinkedin, FaInstagram, FaTwitch } from "react-icons/fa"
 import { GoX } from 'react-icons/go'
+import { AuthContext } from "../store/context"
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css";
+const options = { day: 'numeric', month: 'short', year: 'numeric' };
 const Profile = () => {
   const [isEdit, setIsEdit] = useState(false);
+  const { user } = useContext(AuthContext);
+  
   const userData = {
-    Name: 'Mubasshir Khan',
-    DOB: '1997-02-12',
-    Email: 'mmk@gmail.com',
-    Phone: '9898123443',
-    img: 'https://wallpapercave.com/wp/wp9180415.jpg',
-    bio: 'Lorem ipsum dolor eligendi temporibus, omnis excepturi beatae possimus? Sed, similique tenetur.'
+    Name: user[0].first_name + " " + user[0].last_name,
+    DOB: new Date(user[0].dob),
+    Email: user[0].email,
+    Phone: user[0].phone,
+    img: user[0].image,
+    bio: user[0].bio
   }
+
+  const [profile, setProfile] = useState(userData);
+  const [startDate, setStartDate] = useState(userData['DOB']);
   const onEditHandler = (e) => {
     e.preventDefault();
     if (isEdit) {
       console.log("Submitting...")
-      setIsEdit(false)
+      setIsEdit(!isEdit)
     } else {
-      setIsEdit(true)
+      setIsEdit(!isEdit)
     }
   }
-  const onCancelHandler = (e) => {
-    e.preventDefault();
-    setIsEdit(false)
-  }
-  const keysToRender = Object.keys(userData).filter((key) => key !== 'img' && key !== 'bio');
+  const onChangeHandler = (e, key) => {
+    console.log(e.target.value)
+    setProfile((prev) => ({
+      ...prev, // Copy the previous state
+      [key]: e.target.value, // Update the specific key with the new value
+    }));
+  };
 
-  const info=keysToRender.map((key) => (
+  const onCancelHandler = (e) => {
+
+    e.preventDefault();
+    setProfile(userData)
+    console.log(profile)
+    setIsEdit(!isEdit)
+  }
+  useEffect(() => { }, [])
+  const keysToRender = Object.keys(profile).filter((key) => key !== 'img' && key !== 'bio');
+
+  const info = keysToRender.map((key) => (
     <div key={key} className="grid grid-cols-2 [&>*]:border-b [&>*]:border-gray-500 [&>*]:pb-2 [&>*]:text-lg mb-2">
       <h6 className="">{key}</h6>
-      <input type={key=='DOB'&&'date'} name="name"  value={userData[key]} className={`bg-transparent outline-none ${isEdit ? 'text-green-500 text' : ''}`} disabled={!isEdit} />
+      <input name="name" onChange={(e) => { onChangeHandler(e, key) }} value={key !== 'DOB' ? profile[key] : profile[key].toLocaleDateString('en-US', options)} className={` bg-transparent outline-none ${isEdit ? 'text-green-500 text' : ''}`} disabled={!isEdit} />
     </div>
   ))
   return (
@@ -37,7 +58,18 @@ const Profile = () => {
       <section className="h-fit bg-gradient-to-t from-gray-800 to-black col-span-2 p-2 rounded-sm shadow-xl">
         <h3 className="text-green-500 text-4xl">About</h3>
         <form className=" mt-6 px-3">
-      {info}
+          {info}
+
+          <div className="container mx-auto mt-8 bg-transparent text-black ">
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              dateFormat="MMM d, y"
+              className="border p-2"
+            />
+          </div>
+
+
           <div className="flex">
             <button onClick={onEditHandler} type={isEdit ? 'submit' : 'button'} className="mt-10 flex  text-lg justify-center items-center bg-transparent hover:bg-green-500 text-green-500 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
               {isEdit ? 'Save ' : 'Edit Information'}{isEdit && <FaEdit className="ml-2" /> && <FaSave className="ml-2" />}
@@ -49,10 +81,10 @@ const Profile = () => {
         </form>
       </section>
       <section className="  bg-gradient-to-t from-gray-800 to-black col-span-1 p-2 rounded-sm shadow-xl flex items-center flex-col drop-shadow-md">
-        <img src="https://wallpapercave.com/wp/wp9180415.jpg" alt="Mubasshir" className="w-[150px] h-[150px] object-cover rounded-full  " />
-        <h2 className="text-xl  font-bold  mt-7">{userData.Name}</h2>
+        <img src={profile.img} alt="Mubasshir" className="w-[150px] h-[150px] object-cover rounded-full  bg-green-300" />
+        <h2 className="text-xl  font-bold  mt-7">{profile.Name}</h2>
         <h3 className="italic text-green-500 font-bold text-lg mt-3">Bio</h3>
-        <p className="text-center">{userData.bio}</p>
+        <p className="text-center">{profile.bio}</p>
         <div className="text-4xl  flex justify-center [&>*]:mx-3 [&>*]:cursor-pointer  mt-4 items-center w-full">
           <FaLinkedin className="hover:text-green-500" />
           <FaInstagram className="hover:text-green-500" />

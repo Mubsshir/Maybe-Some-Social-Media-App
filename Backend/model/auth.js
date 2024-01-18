@@ -44,6 +44,20 @@ class User {
       return null;
     }
   }
+  static async getProfile(uid) {
+    await initialize();
+    let result;
+    try {
+      result = await pool
+        .request()
+        .input("uid", uid)
+        .execute("USP_GET_User_Details");
+      return result.recordset;
+    } catch (err) {
+      console.log("Error while authenticating the user: ", +err);
+      return null;
+    }
+  }
 }
 
 module.exports = User;

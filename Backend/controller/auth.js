@@ -3,6 +3,9 @@ const User = require("../model/auth");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const SECRET_KEY = "MyNameIsKhan";
+
+//get the userinfo from req.userInfo uid:req.userInfo.uid
+
 exports.getUsers = async (req, res) => {
   const users = await User.fetchAllUser();
   res.json(users);
@@ -27,7 +30,7 @@ exports.postLogin = async (req, res) => {
       const AuthToken = jwt.sign(
         { uid: result.uid, username: username },
         SECRET_KEY,
-        { expiresIn: '1hr' }
+        { expiresIn: "1hr" }
       );
       return res.json({ AuthToken });
     } else {
@@ -37,38 +40,39 @@ exports.postLogin = async (req, res) => {
   res.status(401).json({ message: "user not registered ,please signup" });
 };
 
-exports.postLogout = (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      console.log("Error destroying session..." + err);
-      res.status(500).json({ message: "Logout Failed" });
-    } else {
-      res.clearCookie("connect.sid");
-      res.json({ message: "Logout successful" });
-    }
-  });
-};
-
 exports.getAuthStatus = (req, res) => {
-  console.log("verifying token....")
-  const device=(req.headers["user-agent"]);
+  console.log("verifying token....");
+  const device = req.headers["user-agent"];
   const ticket = req.headers["authorization"].split(" ")[1];
-  if(!ticket){
-    console.log(device," is Not verified")
+  if (!ticket) {
+    console.log(device, " is Not verified");
   }
   try {
     jwt.decode(ticket);
-    const deco=jwt.decode(ticket,SECRET_KEY)
-    console.log(deco.exp)
+    const deco = jwt.decode(ticket, SECRET_KEY);
+    console.log(deco.exp);
     const isValid = jwt.verify(ticket, SECRET_KEY);
     if (isValid) {
-      console.log("User is valid")
-      return res.status(200).json({  isValid });
+      console.log("User is valid");
+      return res.status(200).json({ isValid });
     } else {
-      console.log("Invalid User")
+      console.log("Invalid User");
       return res.status(401).json({ message: "You are not authorized" });
     }
   } catch (err) {
+    return res.status(500).json({ message: err });
+  }
+};
+
+exports.getUserProfile = async (req, res) => {
+  try {
+    const uid = req.userInfo.uid;
+    const result = await User.getProfile(uid);
+    if (result) {
+      return res.status(200).json(result);
+    }
+  } catch (err) {
+    console.log("Error: ", err);
     return res.status(500).json({ message: err });
   }
 };

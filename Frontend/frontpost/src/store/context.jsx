@@ -1,37 +1,30 @@
-import { createContext, useEffect, useState } from "react";
-import { getUserInfo, isAuthenticate } from '../services/auth-services'
+import { createContext, useEffect, useState,useCallback } from "react";
+import { getAuthStatus } from '../services/auth-services'
 import PropTypes from 'prop-types';
 export const AuthContext = createContext();
 
 const AuthProvider = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user,setUser]=useState({});
+  // const [user,setUser]=useState({});
 
-  const getUser=async ()=>{
-    try{
-      const user_info=await getUserInfo();
-      if(user_info){
-        setUser(user_info);
-      }
-    }catch(err){
-      setUser({});
-      console.log("ERROR : ",err)
-    }
-  }
-  const setAuth = (result) => {
-    setIsAuthenticated(result);
-  };
-  
-  const checkAuthentication=async()=>{
-    const isAuth= await isAuthenticate();
+  const checkAuthentication=useCallback(async()=>{
+    const isAuth= await getAuthStatus();
     setIsAuthenticated(isAuth);
-  }
-  useEffect(() => {
+    // if(isAuth){
+    //   const user_info=await getUserInfo();
+    //   console.log(user_info)
+    //   setUser(user_info)
+    // }
+  },[setIsAuthenticated])
+
+
+  useEffect(()=>{
     checkAuthentication();
-    isAuthenticate&&getUser();
-  }, [])
+  },[checkAuthentication])
+
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setAuth ,user}}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
       {props.children}
     </AuthContext.Provider>
   );

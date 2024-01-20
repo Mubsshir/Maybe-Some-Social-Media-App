@@ -1,10 +1,9 @@
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
-import Feeds from "./Feeds";
-import Navigation from "../components/layout/Navigation";
-import Profile from "./Profile";
-import { Route, Routes } from "react-router-dom";
 
+import Navigation from "../components/layout/Navigation";
+
+import { Outlet,} from "react-router-dom";
 
 const Home = () => {
   return (
@@ -15,10 +14,7 @@ const Home = () => {
           <Navigation />
         </section>
         <section className=" w-full h-full p-2">
-          <Routes>
-            <Route path="/" element={<Feeds />} />
-            <Route path="/Profile" element={<Profile />} />
-          </Routes>
+          <Outlet />
         </section>
       </main>
       <Footer />

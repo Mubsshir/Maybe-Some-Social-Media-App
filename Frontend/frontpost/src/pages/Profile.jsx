@@ -1,27 +1,40 @@
-import { useState, useContext, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { FaEdit, FaSave, FaLinkedin, FaCalendar, FaInstagram, FaTwitch } from "react-icons/fa"
 import { GoX } from 'react-icons/go'
-import { AuthContext } from "../store/context"
+import { getUserInfo } from "../services/auth-services"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import '../components/styles/datepicker.css'
-//const options = { day: 'numeric', month: 'short', year: 'numeric' };
+var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+let userData;
+let activeSince;
 const Profile = () => {
   const [isEdit, setIsEdit] = useState(false);
-  const { user } = useContext(AuthContext);
-
-  const userData = {
-    Name: user[0].first_name + " " + user[0].last_name,
-    DOB: new Date(user[0].dob),
-    Email: user[0].email,
-    Phone: user[0].phone,
-    img: user[0].image,
-    bio: user[0].bio
-  }
 
 
-  const [profile, setProfile] = useState(userData);
-  const [startDate, setStartDate] = useState(profile['DOB']);
+  const [profile, setProfile] = useState({});
+  const [startDate, setStartDate] = useState(null);
+
+  const fetchUser = useCallback(async () => {
+    console.log("Function Running")
+    const userInfo = await getUserInfo();
+    console.log(userInfo)
+    userData = {
+      Name: userInfo[0].first_name + " " + userInfo[0].last_name,
+      DOB: new Date(userInfo[0].dob),
+      Email: userInfo[0].email,
+      Phone: userInfo[0].phone,
+      img: userInfo[0].image,
+      bio: userInfo[0].bio
+    }
+    activeSince = userInfo[0].created_on;
+    setProfile(userData);
+    setStartDate(userData['DOB']);
+  }, [])
+
+
+
+
   const onEditHandler = (e) => {
     e.preventDefault();
     if (isEdit) {
@@ -40,13 +53,16 @@ const Profile = () => {
   };
 
   const onCancelHandler = (e) => {
-
     e.preventDefault();
     setProfile(userData)
     setStartDate(userData['DOB'])
     setIsEdit(!isEdit)
   }
-  useEffect(() => { }, [])
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser])
+
   const keysToRender = Object.keys(profile).filter((key) => key !== 'img' && key !== 'bio');
 
   const info = keysToRender.map((key) => {
@@ -54,14 +70,14 @@ const Profile = () => {
       return (
         <div key={key} className="grid grid-cols-2 [&>*]:border-b [&>*]:border-gray-500 [&>*]:pb-2 [&>*]:text-lg mb-2">
           <label htmlFor={key}>{key}</label>
-          <input type="email" name={key} onChange={(e) => { onChangeHandler(e, key) }} value={profile[key]} className={`caret-transparent bg-transparent outline-none ${isEdit ? 'text-green-500 text' : ''}`} disabled={!isEdit} />
+          <input type="email" name={key} onChange={(e) => { onChangeHandler(e, key) }} value={profile[key]} className={` bg-transparent outline-none ${isEdit ? 'text-green-500 text' : ''}`} disabled={!isEdit} />
         </div>
       )
     } else if (key == 'Phone') {
       return (
         <div key={key} className="grid grid-cols-2 [&>*]:border-b [&>*]:border-gray-500 [&>*]:pb-2 [&>*]:text-lg mb-2">
           <label htmlFor={key}>{key}</label>
-          <input type="tel" name={key} maxLength={13} onChange={(e) => { onChangeHandler(e, key) }} value={profile[key]} className={`caret-transparent   bg-transparent outline-none ${isEdit ? 'text-green-500 text' : ''}`} disabled={!isEdit} />
+          <input type="tel" name={key} maxLength={13} onChange={(e) => { onChangeHandler(e, key) }} value={profile[key]} className={`  bg-transparent outline-none ${isEdit ? 'text-green-500 text' : ''}`} disabled={!isEdit} />
         </div>
       )
     } else if (key == 'DOB') {
@@ -80,7 +96,6 @@ const Profile = () => {
           >
             <h3 className="text-center font-bold text-green-500">So when did you born?</h3>
           </DatePicker>
-          
         </div>
       )
     }
@@ -88,12 +103,12 @@ const Profile = () => {
       return (
         <div key={key} className="grid grid-cols-2 [&>*]:border-b [&>*]:border-gray-500 [&>*]:pb-2 [&>*]:text-lg mb-2">
           <label htmlFor={key}>{key}</label>
-          <input type="text" name={key} onChange={(e) => { onChangeHandler(e, key) }} value={profile[key]} className={`caret-transparent bg-transparent outline-none ${isEdit ? 'text-green-500 text' : ''}`} disabled={!isEdit} />
+          <input type="text" name={key} onChange={(e) => { onChangeHandler(e, key) }} value={profile[key]} className={` bg-transparent outline-none ${isEdit ? 'text-green-500 text' : ''}`} disabled={!isEdit} />
         </div>
       )
     }
   })
-  console.log(info)
+
   return (
     <main className="w-full h-full grid grid-cols-3 gap-2 bg-gradient-to-tr p-2 from-gray-700 to-black ">
       <section className="h-fit bg-gradient-to-t from-gray-800 to-black col-span-2 p-2 rounded-sm shadow-xl">
@@ -109,6 +124,7 @@ const Profile = () => {
             </button>}
           </div>
         </form>
+        <h3 className="font-bold text-right ">Active on EyeBook Since: <span className="ml-1 font-semibold text-green-500">{new Date(activeSince).toLocaleString('en-US', options)}</span> </h3>
       </section>
       <section className="  bg-gradient-to-t from-gray-800 to-black col-span-1 p-2 rounded-sm shadow-xl flex items-center flex-col drop-shadow-md">
         <img src={profile.img} alt="Mubasshir" className="w-[150px] h-[150px] object-cover rounded-full  bg-green-300" />

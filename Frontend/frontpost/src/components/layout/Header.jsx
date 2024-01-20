@@ -1,11 +1,13 @@
 import Cookies from "js-cookie";
 import { AuthContext } from "../../store/context";
 import { useContext } from "react";
+import { redirect } from "react-router-dom";
 const Header = () => {
-  const { setAuth } = useContext(AuthContext)
+  const { setIsAuthenticated } = useContext(AuthContext)
   const logoutHandler = async () => {
     Cookies.remove('token');
-    setAuth(false);
+    setIsAuthenticated(false);
+    redirect('/')
   }
   return (
     <header className="bg-green-500  flex justify-between items-center px-4 py-2 xl:h-[8%]">

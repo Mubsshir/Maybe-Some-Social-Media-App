@@ -1,8 +1,8 @@
 
 const Page404 = () => {
   return (
-    <div className="w-full h-full flex justify-center items-center text-5xl font-bold text-green-500">
-      Page Not Found
+    <div className="col-span-full row-span-full flex justify-center items-center bg-black font-bold text-green-500">
+      <h3 className=" phone:text-xl lg:text-5xl">Page Not Found</h3>
     </div>
   )
 }

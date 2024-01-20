@@ -77,7 +77,7 @@ export const getFeeds = async () => {
 };
 
 export const getUserInfo = async () => {
-  const head=getHeaders();
+  const head = getHeaders();
   if (head) {
     try {
       const res = await fetch(`${API_BASE_URL}/profile`, {
@@ -96,3 +96,26 @@ export const getUserInfo = async () => {
   }
   return null;
 };
+
+
+export const sharePost= async(content)=>{
+  const head=getHeaders();
+  if(head){
+    try{
+      const res=await fetch(`${API_BASE_URL}/feed`,{
+        method:'PUT',
+        headers:head,
+        body:JSON.stringify({content:content})
+      });
+      if(res.ok){
+        return true;
+      }else{
+        return false;
+      }
+    }catch(err){
+      console.log("Error while sending post : ",err);
+    }
+  }else{
+    return true;
+  }
+}

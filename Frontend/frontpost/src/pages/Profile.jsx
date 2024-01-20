@@ -32,9 +32,6 @@ const Profile = () => {
     setStartDate(userData['DOB']);
   }, [])
 
-
-
-
   const onEditHandler = (e) => {
     e.preventDefault();
     if (isEdit) {
@@ -110,8 +107,8 @@ const Profile = () => {
   })
 
   return (
-    <main className="w-full h-full grid grid-cols-3 gap-2 bg-gradient-to-tr p-2 from-gray-700 to-black ">
-      <section className="h-fit bg-gradient-to-t from-gray-800 to-black col-span-2 p-2 rounded-sm shadow-xl">
+    <main className="row-span-full col-span-full bg-gray-900 text-white w-full h-full grid grid-cols-3 gap-2 bg-gradient-to-tr p-2">
+      <section className=" h-fit bg-gray-800 col-span-2 p-2 rounded-sm shadow-xl">
         <h3 className="text-green-500 text-4xl">About</h3>
         <form className=" mt-6 px-3">
           {info}
@@ -124,9 +121,9 @@ const Profile = () => {
             </button>}
           </div>
         </form>
-        <h3 className="font-bold text-right ">Active on EyeBook Since: <span className="ml-1 font-semibold text-green-500">{new Date(activeSince).toLocaleString('en-US', options)}</span> </h3>
+        <h3 className="font-bold text-right mt-10 ">Active on EyeBook Since: <span className="ml-1 font-semibold text-green-500">{new Date(activeSince).toLocaleString('en-US', options)}</span> </h3>
       </section>
-      <section className="  bg-gradient-to-t from-gray-800 to-black col-span-1 p-2 rounded-sm shadow-xl flex items-center flex-col drop-shadow-md">
+      <section className="bg-gray-800 col-span-1 p-2 rounded-sm shadow-xl flex items-center flex-col drop-shadow-md">
         <img src={profile.img} alt="Mubasshir" className="w-[150px] h-[150px] object-cover rounded-full  bg-green-300" />
         <h2 className="text-xl  font-bold  mt-7">{profile.Name}</h2>
         <h3 className="italic text-green-500 font-bold text-lg mt-3">Bio</h3>

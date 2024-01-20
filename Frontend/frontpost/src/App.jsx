@@ -8,6 +8,7 @@ import Profile from './pages/Profile'
 import Page404 from './pages/Page404'
 import Landing from './pages/Landing'
 import Feeds from './pages/Feeds'
+import Create from "./pages/Create";
 //import Test from "./test/Test";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} >
           <Route path="profile" element={<Profile />} />
           <Route index path="feeds" element={<Feeds />} />
+          <Route path="create" element={<Create/>} />
           <Route path="*" element={<Page404 />} />
         </Route>
         <Route path="/login" element={!isAuthenticated ? <Landing /> : <Navigate to="/feeds" />} />

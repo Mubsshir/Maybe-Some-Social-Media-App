@@ -10,9 +10,9 @@ const Header = () => {
     redirect('/')
   }
   return (
-    <header className="bg-green-500  flex justify-between items-center px-4 py-2 xl:h-[8%]">
-      <h3 className="text-4xl first-letter:font-bold first-letter:px-3 first-letter:bg-white first-letter:text-green-500 text-white first-letter:mr-2">Eyebook</h3>
-      <button className="font-bold text-2xl font-sans px-3 py-1 bg-white text-green-500 hover:bg-green-400 hover:text-white"
+    <header className="col-span-full row-auto  flex justify-between items-center px-3 bg-green-500 ">
+      <h3 className="text-3xl font-bold text-white first-letter:border-white first-letter:text-4xl  first-letter:px-3 first-letter:bg-white first-letter:text-green-500 first-letter:mr-2 first-letter:rounded-sm">Eyebook</h3>
+      <button className="flex  text-lg justify-center items-center bg-white hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded"
         onClick={logoutHandler} >Logout</button>
     </header>
   )

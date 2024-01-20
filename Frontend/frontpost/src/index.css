@@ -8,13 +8,9 @@
   margin: 0;
 }
 body{
-  background-color: rgba(0, 0, 0, 0.486);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: black;
   background-blend-mode: darken;
   overflow: hidden;
-  height: 100lvh;
   user-select: none;
 }
 #root{
@@ -22,6 +18,9 @@ body{
   width: 100%;
 }
 
+.hideScroll::-webkit-scrollbar{
+  display: none;
+}
 /* width */
 ::-webkit-scrollbar {
   width: 5px;

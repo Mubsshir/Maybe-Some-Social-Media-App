@@ -17,8 +17,7 @@ exports.getFeeds = async (req, res) => {
 exports.postFeed = async (req, res) => {
   try {
     const { content, image } = req.body;
-    console.log(req.session);
-    const uid = req.session.userID;
+    const uid = req.userInfo.uid;
     const feed = new Feed(uid, content, image);
     const result = await feed.save();
     if (result) {
@@ -33,7 +32,7 @@ exports.postFeed = async (req, res) => {
 
 exports.getFeed = async (req, res) => {
   try {
-    const uid = req.session.userID;
+    const uid = req.userInfo.uid;
     console.log(req.ip);
     const result = await Feed.getPostsByUserID(uid);
     if (result.length > 0) {
@@ -48,7 +47,7 @@ exports.getFeed = async (req, res) => {
 
 exports.deleteFeed = async (req, res) => {
   try {
-    const uid = req.session.userID;
+    const uid = req.userInfo.uid;
     const pid = req.body.pid;
     const result = await Feed.deletePost(uid, pid);
     if (result > 0) {
@@ -63,7 +62,7 @@ exports.deleteFeed = async (req, res) => {
 
 exports.postLike = async (req, res) => {
   try {
-    const uid = req.session.userID;
+    const uid = req.userInfo.uid;
     const pid = req.body.pid;
     const result = await Feed.likePost(uid, pid);
     if (result > 0) {

@@ -21,8 +21,8 @@ const Feeds = () => {
       console.log("Error: ", err);
     }
     setIsLoading(false);
-  },[setIsLoading]);
-  
+  }, [setIsLoading]);
+
   useEffect(() => {
     getPosts()
   }, [getPosts])
@@ -35,10 +35,13 @@ const Feeds = () => {
       </div>
     )
   }
-  return (
-    <div className="overflow-y-scroll drop-shadow-xl h-full w-10/12 rounded-sm  grid grid-cols-2 grid-flow-col-dense gap-2 bg-gradient-to-tl from-gray-700 to-black  px-1 py-2">
+  return (<>
+    <div className=" gap-2 transition-all ease-in-out duration-300 h-full bg-gray-900 w-full phone:col-span-full lg:col-span-9 row-span-full   drop-shadow-xl rounded-sm  px-1 py-2 grid grid-cols-9  grid-rows-12">
       {posts ? renderPosts : <h4>No Post Found</h4>}
     </div>
+    <div className="bg-gray-700 h-full phone:hidden lg:block row-span-full  lg:col-span-3 mr-1 px-2 drop-shadow-sm ">
+      <h2>List of active users</h2>
+    </div></>
   )
 }
 

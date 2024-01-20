@@ -8,6 +8,10 @@ export default {
     extend: {
       screens:{
         'phone':'320px'
+      },
+      backgroundImage: {
+        'landing': "url('./src/images/LandingPage.jpg')",
+        'footer-texture': "url('/img/footer-texture.png')",
       }
     },
     

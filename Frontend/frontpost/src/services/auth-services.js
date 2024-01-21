@@ -55,6 +55,26 @@ export const login = async (username, pass) => {
   }
 };
 
+export const signUp = async (user) => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      return { status: 1, ...data };
+    } else {
+      console.log(await res.json());
+      return { status: 0, ...data };
+    }
+  } catch (err) {
+    console.log("Error: ", err);
+    return null;
+  }
+};
+
 export const getFeeds = async () => {
   const head = getHeaders();
   if (head) {
@@ -97,25 +117,24 @@ export const getUserInfo = async () => {
   return null;
 };
 
-
-export const sharePost= async(content)=>{
-  const head=getHeaders();
-  if(head){
-    try{
-      const res=await fetch(`${API_BASE_URL}/feed`,{
-        method:'PUT',
-        headers:head,
-        body:JSON.stringify({content:content})
+export const sharePost = async (content) => {
+  const head = getHeaders();
+  if (head) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/feed`, {
+        method: "PUT",
+        headers: head,
+        body: JSON.stringify({ content: content }),
       });
-      if(res.ok){
+      if (res.ok) {
         return true;
-      }else{
+      } else {
         return false;
       }
-    }catch(err){
-      console.log("Error while sending post : ",err);
+    } catch (err) {
+      console.log("Error while sending post : ", err);
     }
-  }else{
+  } else {
     return true;
   }
-}
+};

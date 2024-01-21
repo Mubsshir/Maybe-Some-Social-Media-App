@@ -17,9 +17,7 @@ const pool = new sql.ConnectionPool(config);
 
 const initialize = async () => {
   try {
-    console.log("Trying to connect with database..........");
     await pool.connect();
-    console.log("\n---Connected to database----\n");
   } catch (err) {
     console.log(`\n----Error while Connecting to Database : ${err}---\n`);
   }

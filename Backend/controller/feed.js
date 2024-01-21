@@ -5,9 +5,9 @@ exports.getFeeds = async (req, res) => {
   try {
     const result = await Feed.getPosts();
     if (result.length > 0) {
-      return res.send(result);
+      return res.status(200).json(result);
     }
-    return res.json({ message: "No post found" });
+    return res.status(404).json({ message: "No post found" });
   } catch (err) {
     console.log("Something went wrong\n" + err);
     res.json({ message: "Error while Fetching posts: " + err });
@@ -16,7 +16,7 @@ exports.getFeeds = async (req, res) => {
 
 exports.postFeed = async (req, res) => {
   try {
-    const { content, image } = req.body;
+    const { content, image } = req.body;  
     const uid = req.userInfo.uid;
     const feed = new Feed(uid, content, image);
     const result = await feed.save();

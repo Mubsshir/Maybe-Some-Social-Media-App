@@ -12,17 +12,29 @@ exports.getUsers = async (req, res) => {
 };
 
 exports.postSignUp = async (req, res) => {
+try{
+  console.log(req.body)
   const cryptPass = await bcrypt.hash(req.body.pass, 12);
-  const user = new User(req.body.username, "", cryptPass); //Later I will add the provision for email
+  const {firstName,lastName,email,dob,username}=req.body;
+
+  const user = new User(firstName,lastName,username,email,dob,cryptPass); //Later I will add the provision for email
   const result = await user.save();
-  return res.json(result);
+  if(result.status=1){
+    console.log("User Created");
+    return res.status(200).json({message:result.message})
+  }
+  else{
+    console.log("User exist");
+    return res.status(401).json({message:result.message});
+  }
+}catch(err){
+  console.log("Error while signing up the user: ",err);
+  return res.status(500).json({message:err});
+}
 };
 
 exports.postLogin = async (req, res) => {
-  console.log("In Login....");
-  console.log(req.body);
   const { username, pass } = req.body;
-
   const result = await User.FindUserCred(username);
   if (result.pass) {
     const passMatch = await bcrypt.compare(pass, result.pass);

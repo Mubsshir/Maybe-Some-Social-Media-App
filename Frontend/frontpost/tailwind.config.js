@@ -11,7 +11,6 @@ export default {
       },
       backgroundImage: {
         'landing': "url('./src/images/LandingPage.jpg')",
-        'footer-texture': "url('/img/footer-texture.png')",
       }
     },
     

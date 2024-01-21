@@ -1,10 +1,13 @@
 const { pool, initialize, sql } = require("../utils/database");
 
 class User {
-  constructor(name, email, password) {
-    this.name = name;
+  constructor(firstName,lastName,username, email,dob, password) {
+    this.firstName=firstName;
+    this.lastName=lastName;
+    this.username = username;
     this.email = email;
     this.password = password;
+    this.dob=dob;
   }
 
   static async fetchAllUser() {
@@ -18,7 +21,11 @@ class User {
     try {
       result = await pool
         .request()
-        .input("username", this.name)
+        .input("firstName", this.firstName)
+        .input("lastName", this.lastName)
+        .input("username", this.username)
+        .input("dob", this.dob)
+        .input("email", this.email)
         .input("pass", this.password)
         .execute("USP_Save_User");
       return result.recordset[0];

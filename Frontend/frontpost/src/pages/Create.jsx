@@ -17,6 +17,7 @@ const Create = () => {
       try{
         const res=await sharePost(content);
         if(res){
+          contentRef.current.value="";
           setMessage("Post shared...😊")
           setIsSharing(false);
         }
@@ -38,7 +39,7 @@ const Create = () => {
     <div className="bg-gray-800 col-span-full row-span-full">
       <form  onSubmit={submitHandler} className="rounded-md bg-gray-900 p-2 w-10/12 text-white mx-auto mt-40 border shadow-xl">
         <h4 className="text-lg font-bold mb-4">What is on your head....🧐</h4>
-        <textarea  ref={contentRef} name="content" rows="4" className="w-full bg-transparent p-2 outline-none border rounded-sm border-white" maxLength={200}></textarea>
+        <textarea  ref={contentRef} name="content" rows="4" className="w-full bg-transparent p-2 outline-none border rounded-sm border-white" maxLength={500}></textarea>
         <div className="flex">
           <button type="submit" className="my-2 flex mr-2 text-lg justify-center items-center bg-transparent hover:bg-green-500 text-green-500 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
             {'Post Now'}

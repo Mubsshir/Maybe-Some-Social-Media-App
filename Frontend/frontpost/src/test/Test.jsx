@@ -4,6 +4,7 @@ import { getUserInfo } from "../services/auth-services"
 
 const Test = () => {
 
+  //need to make modal component for create post
   const [user, setUser] = useState([]);
   let userData;
   const fetchUser = async () => {

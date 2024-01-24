@@ -3,9 +3,15 @@ import { FaRegComment } from "react-icons/fa";
 import { useState } from "react";
 import PropTypes from 'prop-types';
 const Article = (props) => {
+  const [likeCount,setLikeCount]=useState(0);
   const [isLike, setIsLike] = useState(false);
   const onClickHandler = () => {
     setIsLike(!isLike);
+    if(!isLike){
+      setLikeCount(likeCount+1)
+    }else{
+      setLikeCount(likeCount-1)
+    }
   }
 
   return (
@@ -18,8 +24,12 @@ const Article = (props) => {
         <p>{props.Content}</p>
       </div>
       <div className="text-gray-200 flex justify-start items-center border-t border-gray-600 ">
-        <h3 className="flex items-center text-lg my-2 cursor-pointer select-none" ><IoIosHeart onClick={onClickHandler} fill={`${isLike ? '#22C55E' : 'gray'}`} className="mr-2" size={'1.5rem'} />  Like</h3>
-        <h3 className="flex items-center text-lg my-2 ml-4 cursor-pointer select-none"><FaRegComment fill="#22C55E" className="mr-2" size={'1.5rem'} />  Comment</h3>
+        <h3  onClick={onClickHandler} className="flex items-center text-lg my-2 cursor-pointer select-none" ><IoIosHeart  fill={`${isLike ? '#22C55E' : 'gray'}`} className="mr-2" size={'1.5rem'} />
+          <span className="bg-gray-700 px-2 rounded-sm">
+            {likeCount}
+          </span>
+          </h3>
+        <h3 className="flex items-center text-lg my-2 ml-4 cursor-pointer select-none"><FaRegComment fill="#22C55E" className="mr-2" size={'1.5rem'} /> </h3>
       </div>
     </article>
   )

@@ -1,6 +1,8 @@
 import Cookies from "js-cookie";
 
-const API_BASE_URL = "http://192.168.29.249:3001";
+
+//if internet is off then  instead of ip address use localhost
+const API_BASE_URL = "http://localhost:3001";
 
 function getHeaders() {
   let token = Cookies.get("token");

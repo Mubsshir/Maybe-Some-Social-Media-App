@@ -41,7 +41,7 @@ const Feeds = () => {
     )
   }
   return (<>
-    <div className="flex flex-row py-2 justify-normal items-start flex-wrap overflow-y-scroll hideScroll transition-all ease-in-out duration-300 h-full bg-gray-900 w-full phone:col-span-full lg:col-span-9 row-span-full   drop-shadow-xl rounded-sm  ">
+    <div className="flex flex-row py-2 justify-normal  flex-wrap overflow-y-scroll hideScroll transition-all ease-in-out duration-300 h-full bg-gray-900 w-full phone:col-span-full lg:col-span-9 row-span-full   drop-shadow-xl rounded-sm  ">
       {renderPosts}
     </div>
     <div className="bg-gray-700 h-full phone:hidden lg:block row-span-full  lg:col-span-3 mr-1 px-2 drop-shadow-sm ">

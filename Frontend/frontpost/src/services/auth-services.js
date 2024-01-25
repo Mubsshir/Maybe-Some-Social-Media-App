@@ -97,6 +97,28 @@ export const getFeeds = async () => {
   return null;
 };
 
+
+export const getMyPost = async () => {
+  const head = getHeaders();
+  if (head) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/feed`, {
+        method: "GET",
+        headers: head,
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      }
+      return null;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+  return null;
+};
+
 export const getUserInfo = async () => {
   const head = getHeaders();
   if (head) {

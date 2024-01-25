@@ -1,16 +1,15 @@
 import { useState, useEffect, useCallback } from "react"
 import Article from "../components/Article"
-import { getFeeds } from "../services/auth-services"
-const Feeds = () => {
+import { getMyPost } from "../services/auth-services"
+const MyPosts = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const getPosts = useCallback(async () => {
     setIsLoading(true);
     try {
-      const data = await getFeeds();
-      if (data) {
-       
-        setPosts(data);
+      const data = await getMyPost();
+      if (data.status===1) {
+        setPosts(data.records);
         setIsLoading(false);
       } else {
         setPosts(null)
@@ -33,9 +32,9 @@ const Feeds = () => {
       name={data.User}
       Content={data.Content}
       PostTime={data.PostTime}
-      likes={data.Like} 
+      likes={data.Like}
       liked={data.likedByYou}
-      />)
+    />)
   }
   else {
     renderPosts = <h3 className="text-center text-green-500 m-auto text-2xl font-bold">No Post Found</h3>
@@ -56,5 +55,4 @@ const Feeds = () => {
     </div></>
   )
 }
-
-export default Feeds
+export default MyPosts

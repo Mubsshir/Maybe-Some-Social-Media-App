@@ -27,7 +27,7 @@ class Feed {
     await initialize();
     const result = await pool
       .request()
-      .input("u_id", uid)
+      .input("uid", uid)
       .execute("USP_Get_PostByID");
     return result.recordset;
   }

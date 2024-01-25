@@ -33,12 +33,12 @@ exports.postFeed = async (req, res) => {
 exports.getFeed = async (req, res) => {
   try {
     const uid = req.userInfo.uid;
-    console.log(req.ip);
+    console.log(req.ip);  
     const result = await Feed.getPostsByUserID(uid);
     if (result.length > 0) {
-      return res.send(result);
+      return res.status(200).json({status:1,records:result});
     }
-    return res.json({ message: "No post found" });
+    return res.status(200).json({status:0, message: "No post found" });
   } catch (err) {
     console.log("Something went wrong\n" + err);
     res.json({ message: "Error while Fetching post: " + err });

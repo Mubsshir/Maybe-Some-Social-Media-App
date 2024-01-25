@@ -5,8 +5,9 @@ const isAuth = require("../middlewares/is-auth");
 
 router.get("/feed",isAuth,feedController.getFeed);
 router.put("/feed",isAuth,feedController.postFeed);
-router.delete("/feed",isAuth,feedController.deleteFeed)
-router.get('/feeds',isAuth,feedController.getFeeds)
-router.post('/like',isAuth,feedController.postLike)
+router.delete("/feed",isAuth,feedController.deleteFeed);
+router.get('/feeds',isAuth,feedController.getFeeds);
+router.post('/like',isAuth,feedController.postLike);
+router.post('/dislike',isAuth,feedController.postDislike);
 
 module.exports=router;

@@ -52,29 +52,7 @@ exports.postLogin = async (req, res) => {
   res.status(401).json({ message: "user not registered ,please signup" });
 };
 
-exports.getAuthStatus = (req, res) => {
-  console.log("verifying token....");
-  const device = req.headers["user-agent"];
-  const ticket = req.headers["authorization"].split(" ")[1];
-  if (!ticket) {
-    console.log(device, " is Not verified");
-  }
-  try {
-    jwt.decode(ticket);
-    const deco = jwt.decode(ticket, SECRET_KEY);
-    console.log(deco.exp);
-    const isValid = jwt.verify(ticket, SECRET_KEY);
-    if (isValid) {
-      console.log("User is valid");
-      return res.status(200).json({ isValid });
-    } else {
-      console.log("Invalid User");
-      return res.status(401).json({ message: "You are not authorized" });
-    }
-  } catch (err) {
-    return res.status(500).json({ message: err });
-  }
-};
+
 
 exports.getUserProfile = async (req, res) => {
   try {

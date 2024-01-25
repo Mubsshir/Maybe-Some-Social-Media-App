@@ -16,7 +16,7 @@ exports.getFeeds = async (req, res) => {
 
 exports.postFeed = async (req, res) => {
   try {
-    const { content, image } = req.body;  
+    const { content, image } = req.body;
     const uid = req.userInfo.uid;
     const feed = new Feed(uid, content, image);
     const result = await feed.save();
@@ -63,7 +63,7 @@ exports.deleteFeed = async (req, res) => {
 exports.postLike = async (req, res) => {
   try {
     const uid = req.userInfo.uid;
-    const pid = req.body.pid;
+    const pid = req.body.postID;
     const result = await Feed.likePost(uid, pid);
     if (result > 0) {
       return res.status(200).json({ message: "Post Liked" });
@@ -73,5 +73,19 @@ exports.postLike = async (req, res) => {
     console.log("Somthing went wrong\n" + err);
     res.json({ message: "Error while Liking the post: " + err });
   }
+};
 
+
+exports.postDislike = async (req, res) => {
+  try {
+    const uid = req.userInfo.uid;
+    const pid = req.body.postID;
+    const result = await Feed.dislikePost(uid, pid);
+    if (result.status===1) {
+      return res.status(200).json({ message: "Post disliked" });
+    }
+  } catch (err) {
+    console.log("Somthing went wrong while disliking the post: \n" + err);
+    res.json({ message: "Error while disliking the post: " + err });
+  }
 };

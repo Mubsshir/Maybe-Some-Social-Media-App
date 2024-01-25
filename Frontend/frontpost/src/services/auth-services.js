@@ -1,6 +1,5 @@
 import Cookies from "js-cookie";
 
-
 //if internet is off then  instead of ip address use localhost
 const API_BASE_URL = "http://localhost:3001";
 
@@ -135,6 +134,53 @@ export const sharePost = async (content) => {
       }
     } catch (err) {
       console.log("Error while sending post : ", err);
+    }
+  } else {
+    return true;
+  }
+};
+
+export const likePost = async (postID) => {
+  const head = getHeaders();
+  if (head) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/like`, {
+        method: "POST",
+        headers: head,
+        body: JSON.stringify({ postID: postID }),
+      });
+      if (res.ok) {
+        console.log(await res.json());
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      console.log("Error while liking the post : ", err);
+    }
+  } else {
+    return true;
+  }
+};
+
+export const dislikePost = async (postID) => {
+  const head = getHeaders();
+  if (head) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/dislike`, {
+        method: "POST",
+        headers: head,
+        body: JSON.stringify({ postID: postID }),
+      });
+      if (res.ok) {
+        console.log(await res.json());
+        console.log("Post disliked:  auth function")
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      console.log("Error while disliking the post : ", err);
     }
   } else {
     return true;

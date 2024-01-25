@@ -49,13 +49,11 @@ class Feed {
   }
   static async getPosts() {
     await initialize();
-    const result = await pool
-      .request()
-      .execute("USP_Get_Posts");
+    const result = await pool.request().execute("USP_Get_Posts");
     return result.recordset;
   }
 
-  static async likePost(uid,pid){
+  static async likePost(uid, pid) {
     try {
       await initialize();
       const result = await pool
@@ -68,9 +66,24 @@ class Feed {
     } catch (err) {
       console.log("Error while Deleting post:" + err);
       throw err;
-    }    
+    }
   }
 
+  static async dislikePost(uid, pid) {
+    try {
+      await initialize();
+      const result = await pool
+        .request()
+        .input("uid", uid)
+        .input("pid", pid)
+        .execute("USP_Delete_Post_Like");
+    
+      return result.recordset[0];
+    } catch (err) {
+      console.log("Error while Disliking post:" + err);
+      throw err;
+    }
+  }
 }
 
 module.exports = Feed;

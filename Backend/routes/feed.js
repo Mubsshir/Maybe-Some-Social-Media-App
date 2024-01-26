@@ -9,5 +9,6 @@ router.delete("/feed",isAuth,feedController.deleteFeed);
 router.get('/feeds',isAuth,feedController.getFeeds);
 router.post('/like',isAuth,feedController.postLike);
 router.post('/dislike',isAuth,feedController.postDislike);
+router.post('/likes',isAuth,feedController.fetchLikesInPost);
 
 module.exports=router;

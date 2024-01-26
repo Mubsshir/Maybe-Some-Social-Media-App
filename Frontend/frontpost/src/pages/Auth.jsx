@@ -4,6 +4,7 @@ import { useRef, useContext, useState } from "react";
 import { AuthContext } from '../store/context'
 import classNames from 'classnames'
 import PickDate from "../components/ui/PickDate";
+import Modal from "../components/ui/Modal";
 
 const Auth = () => {
   const headingClass = classNames("text-center text-white my-4 text-3xl");
@@ -22,7 +23,7 @@ const Auth = () => {
   const passRef = useRef("");
   const cPassRef = useRef("");
 
-  const { setIsAuthenticated } = useContext(AuthContext);
+  const { setIsAuthenticated,setUID } = useContext(AuthContext);
 
   const formTypeHandler = () => {
     setIsSignIn(!signIn)
@@ -41,9 +42,10 @@ const Auth = () => {
       return;
     }
     if (signIn) {
-      const isLoggedIn = await login(username, pass);
-      if (isLoggedIn) {
+      const uid = await login(username, pass);
+      if (uid) {
         setIsAuthenticated(true);
+        setUID(uid);
       } else {
         setIsValid(false)
         setIsAuthenticated(false);
@@ -113,6 +115,9 @@ const Auth = () => {
         </div>
         <Input input={{ type: 'submit', value: signIn ? 'Login' : 'Create Account' }} className="bg-green-500  cursor-pointer mt-4  py-2 text-xl  text-white rounded-lg" />
       </form>
+      <Modal>
+        <div>Hello</div>
+      </Modal>
       {!isValid && <p className="text-red-600 font-semibold text-xl px-4 mb-3 ml-2">{ErrorMsg}</p>}
     </div >
   )

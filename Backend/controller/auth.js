@@ -44,7 +44,7 @@ exports.postLogin = async (req, res) => {
         SECRET_KEY,
         { expiresIn: "1hr" }
       );
-      return res.json({ AuthToken });
+      return res.json({ AuthToken,uid:result.uid });
     } else {
       return res.status(401).json({ message: "invalid username/password" });
     }

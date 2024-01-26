@@ -77,11 +77,25 @@ class Feed {
         .input("uid", uid)
         .input("pid", pid)
         .execute("USP_Delete_Post_Like");
-    
+
       return result.recordset[0];
     } catch (err) {
       console.log("Error while Disliking post:" + err);
       throw err;
+    }
+  }
+  static async fetchLikesInPost(pid) {
+    try {
+      await initialize();
+      const result = await pool
+        .request()
+        .input("pid", pid)
+        .execute("USP_Get_LikesBy_PostID");
+  
+      return result.recordsets[0];
+    } catch (error) {
+      console.log("Opps: ",error)
+      throw error;
     }
   }
 }

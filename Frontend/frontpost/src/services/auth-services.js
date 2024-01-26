@@ -47,12 +47,13 @@ export const login = async (username, pass) => {
       const result = await res.json();
       Cookies.remove("token");
       Cookies.set("token", result.AuthToken);
-      return true;
+
+      return result.uid;
     }
-    return false;
+    return null;
   } catch (err) {
     console.log("Error :" + err);
-    return { message: "fail" };
+    return null;
   }
 };
 
@@ -96,7 +97,6 @@ export const getFeeds = async () => {
   }
   return null;
 };
-
 
 export const getMyPost = async () => {
   const head = getHeaders();
@@ -158,7 +158,7 @@ export const sharePost = async (content) => {
       console.log("Error while sending post : ", err);
     }
   } else {
-    return true;
+    return false;
   }
 };
 
@@ -181,7 +181,7 @@ export const likePost = async (postID) => {
       console.log("Error while liking the post : ", err);
     }
   } else {
-    return true;
+    return false;
   }
 };
 
@@ -196,7 +196,7 @@ export const dislikePost = async (postID) => {
       });
       if (res.ok) {
         console.log(await res.json());
-        console.log("Post disliked:  auth function")
+        console.log("Post disliked:  auth function");
         return true;
       } else {
         return false;
@@ -205,6 +205,33 @@ export const dislikePost = async (postID) => {
       console.log("Error while disliking the post : ", err);
     }
   } else {
-    return true;
+    return false;
+  }
+};
+
+export const fetchLikesOnPost = async (postID) => {
+  const head = getHeaders();
+  if (head) {
+    try {
+      console.log("Fetch like Summoned");
+      const res = await fetch(`${API_BASE_URL}/likes`, {
+        method: "POST",
+        headers: head,
+        body: JSON.stringify({ postID: postID }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data);
+        return data;
+      } else {
+        return await res.json();
+      }
+    } catch (err) {
+      console.log("Error while disliking the post : ", err);
+      return null;
+    }
+  } else {
+    return null;
   }
 };

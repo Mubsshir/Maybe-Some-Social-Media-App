@@ -5,16 +5,11 @@ export const AuthContext = createContext();
 
 const AuthProvider = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // const [user,setUser]=useState({});
+  const [UID,setUID]=useState(null);
 
   const checkAuthentication=useCallback(async()=>{
     const isAuth= await getAuthStatus();
     setIsAuthenticated(isAuth);
-    // if(isAuth){
-    //   const user_info=await getUserInfo();
-    //   console.log(user_info)
-    //   setUser(user_info)
-    // }
   },[setIsAuthenticated])
 
 
@@ -24,7 +19,7 @@ const AuthProvider = (props) => {
 
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated ,UID,setUID}}>
       {props.children}
     </AuthContext.Provider>
   );

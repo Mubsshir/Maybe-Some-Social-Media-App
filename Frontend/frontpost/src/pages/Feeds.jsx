@@ -9,7 +9,7 @@ const Feeds = () => {
     try {
       const data = await getFeeds();
       if (data) {
-       
+
         setPosts(data);
         setIsLoading(false);
       } else {
@@ -27,15 +27,17 @@ const Feeds = () => {
   }, [getPosts])
   let renderPosts;
   if (posts) {
+    console.log(posts)
     renderPosts = posts.map((data, idx) => <Article
       key={idx}
       PID={data.post_id}
       name={data.User}
       Content={data.Content}
       PostTime={data.PostTime}
-      likes={data.Like} 
+      likes={data.Like}
       liked={data.likedByYou}
-      />)
+      pu_id={data.user_id}
+    />)
   }
   else {
     renderPosts = <h3 className="text-center text-green-500 m-auto text-2xl font-bold">No Post Found</h3>

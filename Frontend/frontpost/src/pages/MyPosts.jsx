@@ -34,6 +34,7 @@ const MyPosts = () => {
       PostTime={data.PostTime}
       likes={data.Like}
       liked={data.likedByYou}
+      pu_id={data.user_id}
     />)
   }
   else {

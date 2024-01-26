@@ -89,3 +89,22 @@ exports.postDislike = async (req, res) => {
     res.json({ message: "Error while disliking the post: " + err });
   }
 };
+
+
+
+exports.fetchLikesInPost=async(req,res)=>{
+  try{
+    console.log(req.body)
+    const pid=req.body.postID;
+    console.log("Post ID: ",pid)
+    const result=await Feed.fetchLikesInPost(pid);
+    console.log(result)
+    if(result.length>0){
+      return res.status(200).json({status:1,likes:result})
+    }
+    return res.status(200).json({status:-1,likes:result})
+  }catch(error){
+    console.log("Error while fetching post likes : ",error);
+    return res.status(500).json({status:0,message:error})
+  }
+}

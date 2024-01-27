@@ -8,8 +8,14 @@ const AuthProvider = (props) => {
   const [UID,setUID]=useState(null);
 
   const checkAuthentication=useCallback(async()=>{
-    const isAuth= await getAuthStatus();
-    setIsAuthenticated(isAuth);
+    const result= await getAuthStatus();
+    if(result){
+      setIsAuthenticated(true);
+      setUID(result.uid);
+    }else{
+      setIsAuthenticated(false)
+    }
+
   },[setIsAuthenticated])
 
 

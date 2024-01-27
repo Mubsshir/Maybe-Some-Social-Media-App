@@ -26,6 +26,8 @@ const Feeds = () => {
     getPosts()
   }, [getPosts])
   let renderPosts;
+
+
   if (posts) {
     console.log(posts)
     renderPosts = posts.map((data, idx) => <Article
@@ -37,6 +39,7 @@ const Feeds = () => {
       likes={data.Like}
       liked={data.likedByYou}
       pu_id={data.user_id}
+      re_render={ getPosts}
     />)
   }
   else {

@@ -24,10 +24,17 @@ const Modal = (props) => {
 
   return isOpen ? (
     <>
-      <div onClick={()=>{setIsOpen(false)}} className= 'w-dvw h-dvh bg-black bg-opacity-40 fixed left-0 top-0' ></div>
-      <div ref={ModalRef} className="w-1/3  top-1/3 bg-white fixed shadow-sm left-0" >
-        <div className='bg-green-500 px-1 py-1 font-semibold text-white'>
-          <h3>Error</h3>
+      <div onClick={() => { setIsOpen(false) }} className='w-dvw h-dvh bg-black bg-opacity-40 fixed left-0 top-0' ></div>
+      <div ref={ModalRef} className="  lg:w-1/3 sm:w-6/12  top-2/4 left-[50%]  -translate-x-2/4 -translate-y-2/4 bg-white fixed shadow-sm " >
+        <div className='bg-green-500 px-2 py-1 font-semibold text-white'>
+          <h3>{props.title}</h3>
+        </div>
+        <div className=' mb-12 px-2'>
+          <h3>{props.message}</h3>
+        </div>
+        <div className='  py-3 px-2 flex items-center [&>*]:border [&>*]:px-5 [&>*]:rounded-sm'>
+          <button onClick={() => { props.onYesClick(), setIsOpen(false) }} className='mr-3 border-green-500 text-green-500 hover:bg-green-500 hover:text-white'>Yes</button>
+          <button onClick={() => { setIsOpen(false) }} className='border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white  ' >No</button>
         </div>
       </div>
     </>
@@ -36,8 +43,9 @@ const Modal = (props) => {
 
 
 Modal.propTypes = {
-  children: PropTypes.element.isRequired,
-  className: PropTypes.string
+  onYesClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired
 };
 
 export default Modal;

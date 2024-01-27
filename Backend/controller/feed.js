@@ -1,7 +1,6 @@
 const Feed = require("../model/feed");
 
 exports.getFeeds = async (req, res) => {
-  console.log("Fetching posts....");
   try {
     const result = await Feed.getPosts();
     if (result.length > 0) {
@@ -50,7 +49,10 @@ exports.deleteFeed = async (req, res) => {
     const uid = req.userInfo.uid;
     const pid = req.body.pid;
     const result = await Feed.deletePost(uid, pid);
+    console.log("Deleting Post: ",pid);
+    console.log(result)
     if (result > 0) {
+      console.log("Post Deleted")
       return res.status(200).json({ message: "Post deleted" });
     }
     return res.json({ message: "Post not found" });

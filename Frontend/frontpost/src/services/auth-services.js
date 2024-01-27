@@ -24,7 +24,7 @@ export const getAuthStatus = async () => {
         headers: head,
       });
       if (res.ok) {
-        return true;
+        return await res.json();
       } else {
         return false;
       }
@@ -226,6 +226,31 @@ export const fetchLikesOnPost = async (postID) => {
         return data;
       } else {
         return await res.json();
+      }
+    } catch (err) {
+      console.log("Error while disliking the post : ", err);
+      return null;
+    }
+  } else {
+    return null;
+  }
+};
+
+
+export const deletePost = async (postID) => {
+  const head = getHeaders();
+  if (head) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/feed`, {
+        method: "DELETE",
+        headers: head,
+        body: JSON.stringify({ pid: postID }),
+      });
+      console.log(await res.json())
+      if (res.ok) {
+        return true;
+      } else {
+        return false;
       }
     } catch (err) {
       console.log("Error while disliking the post : ", err);

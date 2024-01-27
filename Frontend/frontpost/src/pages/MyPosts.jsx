@@ -35,6 +35,7 @@ const MyPosts = () => {
       likes={data.Like}
       liked={data.likedByYou}
       pu_id={data.user_id}
+      re_render={getPosts}
     />)
   }
   else {

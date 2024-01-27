@@ -4,7 +4,6 @@ import { useRef, useContext, useState } from "react";
 import { AuthContext } from '../store/context'
 import classNames from 'classnames'
 import PickDate from "../components/ui/PickDate";
-import Modal from "../components/ui/Modal";
 
 const Auth = () => {
   const headingClass = classNames("text-center text-white my-4 text-3xl");
@@ -65,7 +64,6 @@ const Auth = () => {
       return;
     }
 
-
     if (!signIn) {
       if (pass != cPass) {
         setErrorMsg("Password Not Matched..");
@@ -85,6 +83,7 @@ const Auth = () => {
       }
     }
   }
+
 
   setTimeout(() => {
     setIsValid(true);
@@ -119,7 +118,6 @@ const Auth = () => {
 
         {!isValid && <p className="text-red-600 font-semibold text-xl px-4 mb-3 ml-2">{ErrorMsg}</p>}
       </div >
-      <Modal className="bg-white z-10"/>
     </>
   )
 }

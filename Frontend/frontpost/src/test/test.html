@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      position: static; /* Make sure the body is positioned relative */
+      margin: 0; /* Remove default margin to ensure full width and height */
+      background-color: gray;
+    }
+
+    .container {
+      width: 50%; /* Set your container width as needed */
+      margin: auto; /* Center the container */ /* Ensure the container is positioned relative to the body */
+      border: 1px solid #ccc; /* Just for visualization */
+      height: 300px;
+    
+    }
+
+    .absolute-component {
+      position: fixed;
+      top: 50%; /* Adjust top position as needed */
+      left: 100vh-50; /* Adjust left position as needed */
+      background-color: #ff0000; /* Just for visualization */
+      padding: 10px; /* Just for visualization */
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <form action="">
+    <input type="text">
+    <button>Submit</button>
+  </form>
+
+  <!-- Your component with absolute positioning -->
+  <div class="absolute-component">
+    <!-- Content of your component -->
+    This is an absolutely positioned component.
+  </div>
+</div>
+
+</body>
+</html>

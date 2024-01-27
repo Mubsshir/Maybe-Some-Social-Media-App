@@ -8,16 +8,33 @@
   margin: 0;
 }
 body{
+  position: relative;
   background-color: black;
   background-blend-mode: darken;
   overflow: hidden;
   user-select: none;
+  width: 100vw;
+  height: 100vh;
 }
 #root{
   height: 100%;
   width: 100%;
 }
 
+#backdrop :first-child{
+  width: 100dvw;
+  height: 100dvh;
+  background-color: rgba(12, 27, 3, 0.616);
+  z-index: 60;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+#modal{
+  z-index: 99;
+  position: fixed;
+  top: 35%;
+}
 .hideScroll::-webkit-scrollbar{
   display: none;
 }
@@ -41,6 +58,3 @@ body{
 ::-webkit-scrollbar-thumb:hover {
   background: #22C55E;
 }
-
-
-

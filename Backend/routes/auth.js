@@ -9,4 +9,5 @@ router.post("/signup",authController.postSignUp)
 router.post("/login",authController.postLogin)
 router.post('/api/isAuth',isAuth,(req,res)=>{res.status(200).json({uid:req.userInfo.uid, message:'Authorized'})})
 router.get('/profile',isAuth,authController.getUserProfile )
+
 module.exports=router;

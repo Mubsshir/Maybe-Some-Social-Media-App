@@ -65,6 +65,21 @@ class User {
       return null;
     }
   }
+  static async saveProfilePic(uid,img) {
+    await initialize();
+    let result;
+    try {
+      result = await pool
+        .request()
+        .input("uid", uid)
+        .input("img", img)
+        .execute("USP_Save_ProfilePicture");
+      return result.recordsets[0];
+    } catch (err) {
+      console.log("Error while authenticating the user: ", +err);
+      return null;
+    }
+  }
 }
 
 module.exports = User;

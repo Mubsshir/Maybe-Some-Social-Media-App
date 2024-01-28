@@ -1,36 +1,22 @@
-import { useState, useEffect } from "react"
-
-import { getUserInfo } from "../services/auth-services"
+import { useRef } from "react";
+import { postPicture } from "../services/profile-services";
 
 const Test = () => {
+  const fileRef = useRef();
 
-  //need to make modal component for create post
-  const [user, setUser] = useState([]);
-  let userData;
-  const fetchUser = async () => {
-    console.log("Function Running")
-    const userInfo = await getUserInfo();
-    console.log(userInfo)
-    setUser(userInfo);
-    userData = {
-      Name: user[0].first_name + " " + user[0].last_name,
-      DOB: new Date(user[0].dob),
-      Email: user[0].email,
-      Phone: user[0].phone,
-      img: user[0].image,
-      bio: user[0].bio
-    }
+  const uploadHandler = async() => {
+    const formData = new FormData();
+    const file= fileRef.current.files[0];
+    console.log(file)
+    formData.append('file',file);
+    const result=await postPicture(formData);
+    console.log(result);
   }
 
-
-  console.log(userData)
-  useEffect(() => {
-    fetchUser();
-    console.log("use Effect running")
-  }, [])
   return (
     <>
-      <h1>Hello world</h1>
+      <input className="bg-gray-50 py-2 px-4" ref={fileRef} type="file" />
+      <button onClick={uploadHandler} className="bg-red-400  py-2 px-4 ml-2 text-white font-bold">Upload</button>
     </>
   )
 }

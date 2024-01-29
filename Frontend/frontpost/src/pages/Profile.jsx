@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { FaEdit, FaSave, FaLinkedin, FaCalendar, FaInstagram, FaTwitch } from "react-icons/fa"
 import { GoX } from 'react-icons/go'
 import { getUserInfo } from "../services/auth-services"
@@ -10,10 +10,11 @@ let userData;
 let activeSince;
 const Profile = () => {
   const [isEdit, setIsEdit] = useState(false);
-
-
   const [profile, setProfile] = useState({});
   const [startDate, setStartDate] = useState(null);
+  const imageRef=useRef(null);
+  const [image,setImage]=useState(null);
+  const [changeImage,setChangeImage]=useState(false);
 
   const fetchUser = useCallback(async () => {
     console.log("Function Running")
@@ -30,6 +31,7 @@ const Profile = () => {
     activeSince = userInfo[0].created_on;
     setProfile(userData);
     setStartDate(userData['DOB']);
+    setImage(userData.img)
   }, [])
 
   const onEditHandler = (e) => {
@@ -56,6 +58,16 @@ const Profile = () => {
     setIsEdit(!isEdit)
   }
 
+
+  const fileBrowser=()=>{
+    imageRef.current.click()
+    setChangeImage(true);
+  }
+
+  const handleImageChange=(e)=>{
+    setImage(URL.createObjectURL(e.target.files[0]));
+
+  }
   useEffect(() => {
     fetchUser();
   }, [fetchUser])
@@ -124,7 +136,9 @@ const Profile = () => {
         <h3 className="font-bold text-right mt-10 ">Active on EyeBook Since: <span className="ml-1 font-semibold text-green-500">{new Date(activeSince).toLocaleString('en-US', options)}</span> </h3>
       </section>
       <section className="bg-gray-800 col-span-1 p-2 rounded-sm shadow-xl flex items-center flex-col drop-shadow-md">
-        <img src={profile.img} alt="Mubasshir" className="w-[150px] h-[150px] object-cover rounded-full  bg-green-300" />
+        <img src={image} alt="Mubasshir" className="w-[150px] h-[150px] object-cover rounded-full mb-4 bg-green-300" />
+        <input ref={imageRef} onChange={handleImageChange} type="file" name="image" className="hidden" />
+        <button onClick={fileBrowser} className="bg-transparent hover:bg-green-500 text-green-500 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">{profile.img?'Change Profile Pic':'Upload Profile Pic'}</button>
         <h2 className="text-xl  font-bold  mt-7">{profile.Name}</h2>
         <h3 className="italic text-green-500 font-bold text-lg mt-3">Bio</h3>
         <p className="text-center">{profile.bio}</p>

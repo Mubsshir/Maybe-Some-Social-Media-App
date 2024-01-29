@@ -2,6 +2,7 @@ import { IoIosHeart } from "react-icons/io";
 import { FaRegComment } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState, useContext, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { deletePost, dislikePost, likePost } from "../services/auth-services";
 import InfoBox from "./InfoBox";
@@ -11,6 +12,7 @@ import Modal from "./ui/Modal";
 
 
 const Article = (props) => {
+  const navigate=useNavigate();
   const [likeCount, setLikeCount] = useState(props.likes);
   const [isLike, setIsLike] = useState(props.liked ? true : false);
   const [showLikes, setShowLikes] = useState(false);
@@ -45,6 +47,9 @@ const Article = (props) => {
     setShowModal(true)
   }
 
+  const openProfile=()=>{
+    navigate(`/profile/${props.pu_id}`)
+  }
   const deleteHandler =useCallback(async () => {
     try {
       const result = await deletePost(props.PID);
@@ -58,7 +63,7 @@ const Article = (props) => {
     } catch (err) {
       console.log(err)
     }
-  },[props.PID])
+  },[props])
 
   useEffect(()=>{},[deleteHandler])
   return (
@@ -66,7 +71,7 @@ const Article = (props) => {
       <article className=" ml-3 mb-2 phone:w-[99%] sm:w-[48%] sm:h-[33%]  lg:w-[32%] lg:h-[32%] px-2 py-1  flex flex-col  justify-between bg-gray-800  shadow-2xl rounded-lg ">
         <div className="text-gray-200 border-b pb-2 border-gray-600   flex justify-center flex-col">
           <div className="flex items-center text-2xl justify-between">
-            <h3 className="font-bold  capitalize text-green-500">{props.name}</h3>
+            <h3 onClick={openProfile} className="font-bold  capitalize text-green-500 cursor-pointer">{props.name}</h3>
             {props.pu_id == UID && (
               <div className="relative">
                 <BsThreeDotsVertical onClick={() => { setShowOptions(!showOptions) }} className="cursor-pointer" />

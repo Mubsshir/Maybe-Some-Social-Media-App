@@ -37,3 +37,26 @@ export const postPicture = async (content) => {
     return false;
   }
 };
+
+
+export const getUser = async (uid) => {
+  const head = getHeaders();
+  if (head) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/profile`, {
+        method: "POST",
+        headers: head,
+        body:JSON.stringify({uid:uid})
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      }
+      return null;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+  return null;
+};

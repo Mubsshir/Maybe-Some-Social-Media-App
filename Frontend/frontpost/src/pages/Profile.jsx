@@ -5,6 +5,7 @@ import { getUserInfo } from "../services/auth-services"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import '../components/styles/datepicker.css'
+import { postPicture } from "../services/profile-services"
 var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 let userData;
 let activeSince;
@@ -12,9 +13,9 @@ const Profile = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [profile, setProfile] = useState({});
   const [startDate, setStartDate] = useState(null);
-  const imageRef=useRef(null);
-  const [image,setImage]=useState(null);
-  const [changeImage,setChangeImage]=useState(false);
+  const imageRef = useRef(null);
+  const [image, setImage] = useState(null);
+  const [changeImage, setChangeImage] = useState(false);
 
   const fetchUser = useCallback(async () => {
     console.log("Function Running")
@@ -59,15 +60,34 @@ const Profile = () => {
   }
 
 
-  const fileBrowser=()=>{
+  const fileBrowser = () => {
     imageRef.current.click()
+    setChangeImage(false);
+  }
+
+  const handleImageChange = (e) => {
+    setImage(URL.createObjectURL(e.target.files[0]));
     setChangeImage(true);
   }
 
-  const handleImageChange=(e)=>{
-    setImage(URL.createObjectURL(e.target.files[0]));
-
+  const cancelChangeProfilePic=()=>{
+    setChangeImage(false);
+    setImage(userData.img)
   }
+  const changeProfilePic=async()=>{
+    try{
+      const formData=new FormData();
+      formData.append('file',imageRef.current.files[0]);
+      const result=await postPicture(formData);
+      if(result){
+        setChangeImage(false);
+        console.log("Picture Updated")
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
+
   useEffect(() => {
     fetchUser();
   }, [fetchUser])
@@ -119,7 +139,7 @@ const Profile = () => {
   })
 
   return (
-    <main className="row-span-full col-span-full bg-gray-900 text-white w-full h-full grid grid-cols-3 gap-2 bg-gradient-to-tr p-2">
+    <main className="row-span-full col-span-full bg-gray-900 text-white w-full h-full grid grid-cols-3 gap-1 bg-gradient-to-tr ">
       <section className=" h-fit bg-gray-800 col-span-2 p-2 rounded-sm shadow-xl">
         <h3 className="text-green-500 text-4xl">About</h3>
         <form className=" mt-6 px-3">
@@ -138,7 +158,11 @@ const Profile = () => {
       <section className="bg-gray-800 col-span-1 p-2 rounded-sm shadow-xl flex items-center flex-col drop-shadow-md">
         <img src={image} alt="Mubasshir" className="w-[150px] h-[150px] object-cover rounded-full mb-4 bg-green-300" />
         <input ref={imageRef} onChange={handleImageChange} type="file" name="image" className="hidden" />
-        <button onClick={fileBrowser} className="bg-transparent hover:bg-green-500 text-green-500 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">{profile.img?'Change Profile Pic':'Upload Profile Pic'}</button>
+        <div>
+          {!changeImage &&<button onClick={fileBrowser} className="bg-transparent hover:bg-green-500 text-green-500 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">{profile.img ? 'Change Profile Pic' : 'Upload Profile Pic'}</button>}
+          {changeImage && <button onClick={changeProfilePic} className="ml-2 bg-transparent hover:bg-green-500 text-green-500 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded" >Confirm</button>}
+          {changeImage && <button onClick={cancelChangeProfilePic} className="ml-2 bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" >Cancel</button>}
+        </div>
         <h2 className="text-xl  font-bold  mt-7">{profile.Name}</h2>
         <h3 className="italic text-green-500 font-bold text-lg mt-3">Bio</h3>
         <p className="text-center">{profile.bio}</p>

@@ -6,6 +6,7 @@ const profileController=require('../controller/profile')
 
 
 router.post('/upload',isAuth, upload.single('file') ,profileController.postProfilePicture);
+router.post('/profile',isAuth,profileController.getUser )
 
 
 module.exports=router;

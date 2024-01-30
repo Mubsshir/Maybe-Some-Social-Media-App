@@ -18,7 +18,9 @@ exports.postProfilePicture = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const uid = req.body.uid;
+    console.log(req.body)
     const result = await USER.getProfile(uid);
+    console.log(result)
     if (result) {
       return res.status(200).json(result);
     }

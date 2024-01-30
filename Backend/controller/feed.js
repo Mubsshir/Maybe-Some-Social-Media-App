@@ -96,7 +96,6 @@ exports.postDislike = async (req, res) => {
 
 exports.fetchLikesInPost=async(req,res)=>{
   try{
-    console.log(req.body)
     const pid=req.body.postID;
     console.log("Post ID: ",pid)
     const result=await Feed.fetchLikesInPost(pid);

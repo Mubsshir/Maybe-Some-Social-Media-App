@@ -84,6 +84,7 @@ class Feed {
       throw err;
     }
   }
+  
   static async fetchLikesInPost(pid) {
     try {
       await initialize();
@@ -91,7 +92,6 @@ class Feed {
         .request()
         .input("pid", pid)
         .execute("USP_Get_LikesBy_PostID");
-  
       return result.recordsets[0];
     } catch (error) {
       console.log("Opps: ",error)

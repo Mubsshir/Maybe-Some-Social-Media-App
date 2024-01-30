@@ -48,7 +48,7 @@ const Article = (props) => {
   }
 
   const openProfile=()=>{
-    navigate(`/profile/${props.pu_id}`)
+    navigate(`/user/${props.pu_id}`)
   }
   const deleteHandler =useCallback(async () => {
     try {

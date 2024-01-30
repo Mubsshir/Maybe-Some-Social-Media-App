@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} >
           <Route path="profile" element={<Profile />} />
-          <Route path="profile/:id" element={<UserProfile />} />
+          <Route path="user/:id" element={<UserProfile />} />
           <Route index path="feeds" element={<Feeds />} />
           <Route path="post" element={<MyPosts/>} />
           <Route path="create" element={<Create/>} />

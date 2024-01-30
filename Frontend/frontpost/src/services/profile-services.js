@@ -40,13 +40,15 @@ export const postPicture = async (content) => {
 
 
 export const getUser = async (uid) => {
+  console.log("In service: ", uid)
+  console.log(typeof(uid))
   const head = getHeaders();
   if (head) {
     try {
       const res = await fetch(`${API_BASE_URL}/profile`, {
         method: "POST",
-        headers: head,
-        body:JSON.stringify({uid:uid})
+        headers: {...head,'Content-Type':'application/json'},
+        body:JSON.stringify({uid})
       });
       if (res.ok) {
         const data = await res.json();
